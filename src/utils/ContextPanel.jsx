@@ -44,8 +44,11 @@ const AppProvider = ({ children }) => {
           currentPath === "/add-style" ||
           currentPath === "/brand" ||
           currentPath === "/factory" ||
+          currentPath === "/add-factory" ||
           currentPath === "/width" ||
+          currentPath === "/add-width" ||
           currentPath === "/half-ratio" ||
+          currentPath === "/add-halfratio" ||
           currentPath === "/add-brand" ||
           currentPath === "/change-password"
         ) {

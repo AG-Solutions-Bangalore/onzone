@@ -109,7 +109,7 @@ const WidthList = () => {
         </h3>
 
         <Link
-          to="/add-branch"
+          to="/add-width"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Width

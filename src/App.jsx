@@ -17,6 +17,9 @@ import AddBrand from "./pages/master/brand/AddBrand";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddStyle from "./pages/master/style/AddStyle";
+import AddFactory from "./pages/master/factory/AddFactory";
+import AddWidth from "./pages/master/width/AddWidth";
+import AddHalfRatio from "./pages/attribute/halfRatio/AddHalfRatio";
 const App = () => {
   return (
     <>
@@ -32,10 +35,12 @@ const App = () => {
         <Route path="/style" element={<StyleList />} />
         <Route path="/add-style" element={<AddStyle />} />
         <Route path="/factory" element={<FactoryList />} />
-        <Route path="/factory" element={<FactoryList />} />
+        <Route path="/add-factory" element={<AddFactory />} />
         <Route path="/width" element={<WidthList />} />
+        <Route path="/add-width" element={<AddWidth />} />
         <Route path="/ratio" element={<RatioList />} />
         <Route path="/half-ratio" element={<HalfRatioList />} />
+        <Route path="/add-halfratio" element={<AddHalfRatio />} />
         <Route
           path="/profile"
           element={<ProtectedRoute element={<Profile />} />}
