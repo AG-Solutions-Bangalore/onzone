@@ -133,7 +133,7 @@ const BrandList = () => {
         </h3>
 
         <Link
-          to="/add-branch"
+          to="/add-brand"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Brand

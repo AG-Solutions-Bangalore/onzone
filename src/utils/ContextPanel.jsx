@@ -41,10 +41,12 @@ const AppProvider = ({ children }) => {
           currentPath === "/profile" ||
           currentPath === "/ratio" ||
           currentPath === "/style" ||
+          currentPath === "/add-style" ||
           currentPath === "/brand" ||
           currentPath === "/factory" ||
           currentPath === "/width" ||
           currentPath === "/half-ratio" ||
+          currentPath === "/add-brand" ||
           currentPath === "/change-password"
         ) {
           navigate(currentPath);

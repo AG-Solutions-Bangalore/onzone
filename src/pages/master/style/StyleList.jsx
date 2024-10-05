@@ -6,37 +6,39 @@ import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import { FaEdit } from "react-icons/fa";
 import MUIDataTable from "mui-datatables";
+import AddStyle from "./AddStyle";
 
 const StyleList = () => {
   const [styleData, setStyleData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchStyleData = async () => {
-      try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        const response = await axios.get(`${BASE_URL}/api/fetch-style-list`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setStyleData(response.data?.style);
-      } catch (error) {
-        console.error("Error fetching Style data", error);
-      } finally {
-        setLoading(false);
+  const fetchStyleData = async () => {
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
       }
-    };
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`${BASE_URL}/api/fetch-style-list`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setStyleData(response.data?.style);
+    } catch (error) {
+      console.error("Error fetching Style data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchStyleData();
-    setLoading(false);
   }, []);
 
   const columns = [
@@ -108,7 +110,10 @@ const StyleList = () => {
           Style List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link
+          to="/add-style"
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        >
           + Create A New Style
         </Link>
       </div>
