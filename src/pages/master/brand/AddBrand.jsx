@@ -6,6 +6,7 @@ import BASE_URL from "../../../base/BaseUrl";
 import { toast } from "react-toastify";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import MasterFilter from "../../../components/MasterFilter";
 
 const AddBrand = () => {
   const [brand, setBrand] = useState({
@@ -67,6 +68,7 @@ const AddBrand = () => {
 
   return (
     <Layout>
+       <MasterFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Create Brand

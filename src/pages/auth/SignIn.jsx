@@ -36,7 +36,7 @@ const SignIn = () => {
         if (token) {
           // Store the token in localStorage
           localStorage.setItem("token", token);
-          navigate("/home");
+          navigate("/brand");
         } else {
           toast.error("Login Failed, Token not received.");
         }

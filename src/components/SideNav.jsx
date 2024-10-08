@@ -6,6 +6,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
+import { FaRegUser } from "react-icons/fa";
+import { LuUsers } from "react-icons/lu";
+import { TbReportAnalytics } from "react-icons/tb";
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
   const { pathname } = useLocation();
@@ -14,7 +17,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavType = "dark";
 
   const sidenavTypes = {
-    dark: "bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg shadow-blue-900",
+    dark: "bg-gradient-to-br from-white to-green-900 shadow-lg shadow-blue-900",
     white: "bg-white shadow-sm",
     transparent: "bg-transparent",
   };
@@ -47,21 +50,14 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
       } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-[272px] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
     >
       <div className={`relative`}>
-        <Link to="/home" className="flex items-center justify-center p-4">
+        <Link to="/brand" className="flex items-center justify-center p-3">
           <div className="flex items-center">
             <img
-              src="https://www.ag-solutions.in/assets/images/logo.png"
+              src="/logo.png"
               alt="Logo"
-              className="h-12 w-auto"
+              className="h-14 w-auto"
             />
-            <div className="ml-3 logo-text">
-              <div className="logo-title text-white text-lg font-bold">
-                <span className="font-black">AG</span> Solution
-              </div>
-              <div className="logo-sub-title text-gray-400 text-sm">
-                Single Click Solution
-              </div>
-            </div>
+            
           </div>
         </Link>
         <IconButton
@@ -77,39 +73,20 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
       </div>
       <div className="m-4">
         <ul className="mb-4 flex flex-col gap-1">
-          <li>
-            <NavLink to="/home">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <HomeIcon className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Dashboard
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+         
 
           <li>
             <NavLink to="/brand">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
-                  color="white"
+                  color="green"
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <FaRegUser className="w-5 h-5 text-black" />
                   <Typography
-                    color="inherit"
+                    color="black"
                     className="font-medium capitalize"
                   >
                     Master
@@ -118,101 +95,43 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/style">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Master-style
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/factory">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Master-Factory
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/width">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Width
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+     
           <li>
             <NavLink to="/ratio">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
-                  color="white"
+                  color="green"
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <LuUsers className="w-5 h-5 text-black" />
                   <Typography
-                    color="inherit"
+                    color="black"
                     className="font-medium capitalize"
                   >
-                    Attribute-Ratio
+                    Attribute
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
+          
           <li>
-            <NavLink to="/half-ratio">
+            <NavLink to="/work-order">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
-                  color="white"
+                  color="green"
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <TbReportAnalytics className="w-5 h-5 text-black" />
                   <Typography
-                    color="inherit"
+                    color="black"
                     className="font-medium capitalize"
                   >
-                    Attribute-Half-Ratio
+                    Work Order
                   </Typography>
                 </Button>
               )}

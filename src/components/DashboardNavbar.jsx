@@ -55,7 +55,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
       color={fixedNavbar ? "white" : "transparent"}
       className={`rounded-xl transition-all ${
         fixedNavbar
-          ? "sticky top-4 z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700  shadow-lg  shadow-blue-900"
+          ? "sticky top-4 z-40 py-3 bg-gradient-to-br from-green-900  text-white to-white bg-transparent  shadow-lg  shadow-blue-900"
           : "px-0 py-1"
       }`}
       fullWidth
@@ -68,21 +68,19 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
               fixedNavbar ? "mt-1" : ""
             }`}
           >
-            {breadcrumbs.map((breadcrumb, index) => (
-              <Link key={index} to={breadcrumb.link}>
+          
+              <Link to='/brand' >
                 <Typography
-                  variant="small"
-                  color="white"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  
+                  color="black"
+                  className="font-bold opacity-50  transition-all hover:text-red-500 hover:opacity-100"
                 >
-                  {breadcrumb.name}
+                 Home
                 </Typography>
               </Link>
-            ))}
+         
           </Breadcrumbs>
-          <Typography variant="h6" color="white">
-            {pageTitle}
-          </Typography>
+          
         </div>
         <div className="flex items-center">
           {/* Search and other elements can be added here */}
@@ -97,7 +95,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>
           {/* profile icon  */}
-          <Menu
+          {/* <Menu
             open={profileMenuOpen}
             handler={setProfileMenuOpen}
             placement="bottom-end"
@@ -119,7 +117,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
                 </Link>
               </MenuItem>
             </MenuList>
-          </Menu>
+          </Menu> */}
           {/* Settings icon */}
           <IconButton variant="text" color="red" onClick={handleOpenLogout}>
             <HiArrowRightStartOnRectangle className="h-5 w-5 text-red" />

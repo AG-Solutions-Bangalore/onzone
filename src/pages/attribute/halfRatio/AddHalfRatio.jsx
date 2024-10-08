@@ -7,6 +7,7 @@ import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack, MdSend } from "react-icons/md";
+import AttributeFilter from "../../../components/AttributeFilter";
 const ratioGroup = [
   {
     value: "a",
@@ -35,6 +36,7 @@ const AddHalfRatio = () => {
     ratio_type48: "",
     ratio_type50: "",
   });
+  
   const onInputChange = (e) => {
     setRatioHalf({
       ...ratioHalf,
@@ -86,6 +88,7 @@ const AddHalfRatio = () => {
   };
   return (
     <Layout>
+      <AttributeFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Create Half Ratio

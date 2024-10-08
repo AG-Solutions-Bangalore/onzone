@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { ContextPanel } from "../../../utils/ContextPanel";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
-import { FaEdit } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
 import MUIDataTable from "mui-datatables";
+import MasterFilter from "../../../components/MasterFilter";
+import { motion } from "framer-motion";
 
 const BrandList = () => {
   const [brandData, setBrandData] = useState(null);
@@ -36,8 +38,7 @@ const BrandList = () => {
       }
     };
     fetchBrandData();
-    setLoading(false);
-  }, []);
+  }, [isPanelUp, navigate]);
 
   const columns = [
     {
@@ -63,10 +64,15 @@ const BrandList = () => {
             ? `https://houseofonzone.com/admin/storage/app/public/Brands/${image}`
             : "https://houseofonzone.com/admin/storage/app/public/no_image.jpg";
           return (
-            <img
+            <motion.img
               src={imageUrl}
               alt="Service"
+              className="rounded-lg"
               style={{ width: "40px", height: "40px", objectFit: "cover" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.1 }}
             />
           );
         },
@@ -97,55 +103,68 @@ const BrandList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
-            <div
+            <motion.div
               onClick={() => navigate(`/branch-edit/${id}`)}
               className="flex items-center space-x-2"
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <FaEdit title="Edit" className="h-5 w-5 cursor-pointer" />
-            </div>
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            </motion.div>
           );
         },
       },
     },
   ];
+
   const options = {
     selectableRows: "none",
     elevation: 0,
-    // rowsPerPage: 5,
-    // rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
     download: false,
     print: false,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
+    
   };
+
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+      <MasterFilter/>
+      <motion.div
+        className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Brand List
         </h3>
 
-        <Link
-          to="/add-brand"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.6 }}
         >
-          + Add Brand
-        </Link>
-      </div>
-      <div className="mt-5">
+          <Link
+            to="/add-brand"
+            className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          >
+            + Add Brand
+          </Link>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="mt-5"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <MUIDataTable
           data={brandData ? brandData : []}
           columns={columns}
           options={options}
         />
-      </div>
+      </motion.div>
     </Layout>
   );
 };

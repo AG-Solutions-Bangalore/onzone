@@ -1,25 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import { ContextPanel } from "../../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../../../base/BaseUrl";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import MUIDataTable from "mui-datatables";
+import { CiEdit } from "react-icons/ci";
+import MasterFilter from "../../../components/MasterFilter";
 
 const FactoryList = () => {
   const [factoryData, setFactoryData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFactoryData = async () => {
       try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
+      
         setLoading(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(`${BASE_URL}/api/fetch-factory-list`, {
@@ -116,8 +113,10 @@ const FactoryList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
-            <div className="flex items-center space-x-2">
-              <FaEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            <div 
+            onClick={() => navigate(`/factory-edit/${id}`)}
+            className="flex items-center space-x-2">
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
             </div>
           );
         },
@@ -143,6 +142,7 @@ const FactoryList = () => {
   };
   return (
     <Layout>
+       <MasterFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Factory List

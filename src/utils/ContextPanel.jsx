@@ -36,25 +36,43 @@ const AppProvider = ({ children }) => {
       navigate("/maintenance");
     } else if (isPanelUp?.success) {
       if (token) {
+        const allowedPaths = [
+        
+          "/profile",
+        "/ratio",
+        "/style",
+        "/add-style",
+        "/brand",
+        "/factory",
+        "/add-factory",
+        "/width",
+        "/add-width",
+        "/half-ratio",
+        "/add-halfratio",
+        "/add-brand",
+        "/branch-edit",
+        "/style-edit",
+        "/factory-edit",
+        "/change-password",
+        "/width-edit",
+        "/halfRatio-edit",
+        "/work-order",
+        "/add-work-order",
+        "/work-order-view",
+        "/work-view",
+        "/work-order-edit",
+        "/add-ratio",
+        "/view-ratio-list"
+        ];
+        const isAllowedPath = allowedPaths.some((path) =>
+          currentPath.startsWith(path)
+        );
         if (
-          currentPath === "/home" ||
-          currentPath === "/profile" ||
-          currentPath === "/ratio" ||
-          currentPath === "/style" ||
-          currentPath === "/add-style" ||
-          currentPath === "/brand" ||
-          currentPath === "/factory" ||
-          currentPath === "/add-factory" ||
-          currentPath === "/width" ||
-          currentPath === "/add-width" ||
-          currentPath === "/half-ratio" ||
-          currentPath === "/add-halfratio" ||
-          currentPath === "/add-brand" ||
-          currentPath === "/change-password"
+          isAllowedPath
         ) {
           navigate(currentPath);
         } else {
-          navigate("/home");
+          navigate("/brand");
         }
       } else {
         if (

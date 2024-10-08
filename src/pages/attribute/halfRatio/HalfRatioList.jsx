@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
+import { CiEdit } from "react-icons/ci";
+import AttributeFilter from "../../../components/AttributeFilter";
 
 const HalfRatioList = () => {
   const [halfRatioData, setHalfRatioData] = useState(null);
@@ -96,8 +98,10 @@ const HalfRatioList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
-            <div className="flex items-center space-x-2">
-              <FaEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            <div 
+            onClick={() => navigate(`/halfRatio-edit/${id}`)}
+            className="flex items-center space-x-2">
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
             </div>
           );
         },
@@ -107,8 +111,6 @@ const HalfRatioList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    // rowsPerPage: 5,
-    // rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
     download: false,
@@ -123,6 +125,7 @@ const HalfRatioList = () => {
   };
   return (
     <Layout>
+       <AttributeFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Half Ratio List

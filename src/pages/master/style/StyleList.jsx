@@ -7,6 +7,8 @@ import BASE_URL from "../../../base/BaseUrl";
 import { FaEdit } from "react-icons/fa";
 import MUIDataTable from "mui-datatables";
 import AddStyle from "./AddStyle";
+import { CiEdit } from "react-icons/ci";
+import MasterFilter from "../../../components/MasterFilter";
 
 const StyleList = () => {
   const [styleData, setStyleData] = useState(null);
@@ -78,8 +80,10 @@ const StyleList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
-            <div className="flex items-center space-x-2">
-              <FaEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            <div 
+            onClick={() => navigate(`/style-edit/${id}`)}
+            className="flex items-center space-x-2">
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
             </div>
           );
         },
@@ -105,6 +109,7 @@ const StyleList = () => {
   };
   return (
     <Layout>
+       <MasterFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Style List

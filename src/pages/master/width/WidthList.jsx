@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ContextPanel } from "../../../utils/ContextPanel";
 import BASE_URL from "../../../base/BaseUrl";
 import axios from "axios";
+import { CiEdit } from "react-icons/ci";
+import MasterFilter from "../../../components/MasterFilter";
 
 const WidthList = () => {
   const [widthData, setWidthData] = useState(null);
@@ -76,8 +78,10 @@ const WidthList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
-            <div className="flex items-center space-x-2">
-              <FaEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            <div 
+            onClick={() => navigate(`/width-edit/${id}`)}
+            className="flex items-center space-x-2">
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
             </div>
           );
         },
@@ -103,6 +107,7 @@ const WidthList = () => {
   };
   return (
     <Layout>
+       <MasterFilter/>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Width List
