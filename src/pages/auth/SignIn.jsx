@@ -29,8 +29,10 @@ const SignIn = () => {
       const res = await axios.post(`${BASE_URL}/api/login`, formData);
       if (res.status === 200) {
         const token = res.data.UserInfo?.token;
+        const username = res.data.UserInfo?.user?.full_name
         if (token) {
           localStorage.setItem("token", token);
+          localStorage.setItem("username", username);
           navigate("/brand");
         } else {
           toast.error("Login Failed, Token not received.");
@@ -114,7 +116,7 @@ const SignIn = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     size="lg"
-                    placeholder="name@mail.com"
+                    placeholder="abc"
                     className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                     labelProps={{
                       className: "before:content-none after:content-none",
@@ -132,7 +134,7 @@ const SignIn = () => {
                       variant="small"
                       className=" -mb-3 font-medium hover:text-orange-600  text-gray-500 border-b border-black   "
                     >
-                      <Link >Forgot Password</Link>
+                      <Link to='/forget-password' >Forgot Password</Link>
                     </Typography>
                   </div>
   

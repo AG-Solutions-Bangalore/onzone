@@ -654,6 +654,7 @@ const AddWorkOrderList = () => {
           <hr className="border-b bg-black mb-4" />
           <div className="flex flex-col">
             {users.map((user, index) => (
+              <>
               <div key={index} className="mb-4">
                 {/* First Row */}
                 <div className="flex flex-wrap justify-between gap-1 mb-2">
@@ -950,19 +951,22 @@ const AddWorkOrderList = () => {
                   </div>
                 </div>
                 {/* Add More Button */}
-                <div className="flex justify-start mt-4">
-                  <Button
-                    className="mr-2 mb-2"
-                    style={{ width: "100px" }}
-                 
-                    onClick={(e) => addItem(e)}
-                  >
-                    <span>add</span>
-                  </Button>
-                 
-                </div>
+                
               </div>
+              
+            </>
             ))}
+            <div className="flex justify-start mt-4">
+              <Button
+                className="mr-2 mb-2"
+                style={{ width: "100px" }}
+             
+                onClick={(e) => addItem(e)}
+              >
+                <span>add</span>
+              </Button>
+             
+            </div>
           </div>
 
           {/* Buttons */}

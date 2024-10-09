@@ -183,12 +183,12 @@ const EditWorkOrder = () => {
       const tempUsers = [...users];
       const str = newValue.ratio_type;
 
-      const firstNumber = str.charAt(2);
+      let firstNumber = str.charAt(2);
       if (!isNaN(firstNumber)) {
       } else {
         firstNumber = 1;
       }
-      const secondNumber = str.charAt(5);
+      let secondNumber = str.charAt(5);
       if (!isNaN(secondNumber)) {
       } else {
         secondNumber = 1;

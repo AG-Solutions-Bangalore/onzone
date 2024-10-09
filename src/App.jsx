@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import SignIn from "./pages/auth/SignIn";
 import SIgnUp from "./pages/auth/SIgnUp";
 import Maintenance from "./pages/maintenance/Maintenance";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Profile from "./pages/profile/Profile";
 import ChangePassword from "./pages/profile/ChangePassword";
@@ -65,11 +64,11 @@ const App = () => {
         <Route path="/view-ratio-list/:id" element={<ViewRatioList />} />
         <Route
           path="/profile"
-          element={<ProtectedRoute element={<Profile />} />}
+          element={<Profile />}
         />
         <Route
           path="/change-password"
-          element={<ProtectedRoute element={<ChangePassword />} />}
+          element={<ChangePassword />}
         />
 
         {/* <Route

@@ -95,29 +95,33 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>
           {/* profile icon  */}
-          {/* <Menu
+          <Menu
             open={profileMenuOpen}
             handler={setProfileMenuOpen}
             placement="bottom-end"
           >
             <MenuHandler>
-              <IconButton variant="text" color="orange">
+              <IconButton variant="text" color="blue">
                 <UserCircleIcon className="h-5 w-5 text-red" />
               </IconButton>
             </MenuHandler>
-            <MenuList className="bg-gray-700">
+            <MenuList className="bg-green-200">
+            <Link to="/profile" className="text-black">
               <MenuItem>
-                <Link to="/profile" className="text-black">
+               
                   Profile
-                </Link>
+              
               </MenuItem>
+              </Link>
+              <Link to="/change-password" className="text-black">
               <MenuItem>
-                <Link to="/change-password" className="text-black">
+               
                   Change Password
-                </Link>
+           
               </MenuItem>
+              </Link>
             </MenuList>
-          </Menu> */}
+          </Menu>
           {/* Settings icon */}
           <IconButton variant="text" color="red" onClick={handleOpenLogout}>
             <HiArrowRightStartOnRectangle className="h-5 w-5 text-red" />
