@@ -22,7 +22,7 @@ const AddWorkOrderList = () => {
     work_order_year: dateyear,
     work_order_factory_no: "",
     work_order_brand: "",
-    work_order_style_type: "",
+    work_order_style_type: "Chinese Collar",
     work_order_width: "",
     work_order_count: "",
     work_order_remarks: "",
@@ -440,7 +440,7 @@ const AddWorkOrderList = () => {
     <Layout>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Create Field Team
+        Create Work Order
         </h3>
       </div>
       <div className="w-full p-4 mt-2 bg-white shadow-lg rounded-xl">
@@ -504,7 +504,7 @@ const AddWorkOrderList = () => {
               </FormControl>
             </div>
 
-            <div>
+            <div hidden>
               <FormControl fullWidth>
                 <InputLabel id="service-select-label">
                   <span className="text-sm relative bottom-[6px]">
@@ -626,7 +626,7 @@ const AddWorkOrderList = () => {
               </FormControl>
             </div>
 
-            <div>
+            <div className="col-span-2">
               <Input
                 label="Full Consumption"
                 type="tel"
@@ -647,7 +647,7 @@ const AddWorkOrderList = () => {
                 value={workorder.work_order_remarks}
                 onChange={(e) => onInputChange(e)}
                 className="w-full px-4 py-3 border border-gray-400 rounded-md  transition-all"
-              ></Input>
+              />
             </div>
           </div>
 
@@ -657,7 +657,7 @@ const AddWorkOrderList = () => {
               <>
               <div key={index} className="mb-4">
                 {/* First Row */}
-                <div className="flex flex-wrap justify-between gap-1 mb-2">
+                <div className="flex flex-wrap justify-start gap-1 mb-2">
                   {/* T Code */}
                   <div className="w-1/2 lg:w-1/12">
                     <div className="form-group">
@@ -676,8 +676,26 @@ const AddWorkOrderList = () => {
                       />
                     </div>
                   </div>
+                  {/* MRP */}
+                  <div className="w-1/2 lg:w-[80px] ">
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        label="MRP"
+                        required
+                        inputProps={{
+                          sx: {
+                            height: "0.35rem",
+                          },
+                        }}
+                        name="work_order_sub_amount"
+                        value={user.work_order_sub_amount}
+                        onChange={(e) => onChange(e, index)}
+                      />
+                    </div>
+                  </div>
                   {/* Length */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[88px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
@@ -695,7 +713,7 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* A */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[48px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
@@ -716,7 +734,7 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* B */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[48px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
@@ -736,7 +754,7 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* C */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[48px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
@@ -756,11 +774,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half 38 */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 38"
+                        label="H-38"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -774,11 +792,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half 40 */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 40"
+                        label="H-40"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -792,11 +810,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half 42 */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 42"
+                        label="H-42"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -810,11 +828,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half 44 */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 44"
+                        label="H-44"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -828,11 +846,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half 46 */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 46"
+                        label="H-46"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -845,12 +863,12 @@ const AddWorkOrderList = () => {
                       />
                     </div>
                   </div>
-                  {/* Half 48 */}
-                  <div className="w-1/2 lg:w-1/12">
+                   {/* Half 48 */}
+                   <div className="w-1/2 lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 48"
+                        label="H-48"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -863,16 +881,12 @@ const AddWorkOrderList = () => {
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Second Row */}
-                <div className="flex flex-wrap justify-start gap-4 mb-4">
                   {/* Half 50 */}
-                  <div className="w-1/2  lg:w-1/12">
+                  <div className="w-1/2  lg:w-[58px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half 50"
+                        label="H-50"
                         inputProps={{
                           sx: {
                             height: "0.35rem",
@@ -886,11 +900,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Half Shirt */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[90px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Half Shirt"
+                        label="H-Shirt"
                         required
                         inputProps={{
                           sx: {
@@ -904,11 +918,11 @@ const AddWorkOrderList = () => {
                     </div>
                   </div>
                   {/* Full Shirt */}
-                  <div className="w-1/2 lg:w-1/12">
+                  <div className="w-1/2 lg:w-[90px]">
                     <div className="form-group">
                       <TextField
                         fullWidth
-                        label="Full Shirt"
+                        label="F-Shirt"
                         required
                         inputProps={{
                           sx: {
@@ -921,27 +935,8 @@ const AddWorkOrderList = () => {
                       />
                     </div>
                   </div>
-                  {/* MRP */}
-                  <div className="w-1/2 lg:w-1/12">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="MRP"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_amount"
-                        value={user.work_order_sub_amount}
-                        onChange={(e) => onChange(e, index)}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Delete Button */}
-                  <div className="w-1/2 py-1   lg:w-1/6">
+                 {/* Delete Button */}
+                 <div className="w-1/2 py-1   lg:w-1/12">
                     <IconButton
                       className="w-8 h-8"
                       onClick={() => removeUser(index)}
@@ -950,13 +945,14 @@ const AddWorkOrderList = () => {
                     </IconButton>
                   </div>
                 </div>
-                {/* Add More Button */}
+
+                
                 
               </div>
               
             </>
             ))}
-            <div className="flex justify-start mt-4">
+            <div className="flex justify-start mt-2">
               <Button
                 className="mr-2 mb-2"
                 style={{ width: "100px" }}

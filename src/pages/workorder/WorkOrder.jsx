@@ -148,18 +148,18 @@ const WorkOrder = () => {
                                                             <td rowSpan={5} style={{border:"1px solid rgb(0, 0, 0)",textAlign:"center"}}><span style={tablecss}></span></td>
                                                             <td rowSpan={5} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_length}</span></td>
                                                             <td rowSpan={2} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_barcode}</span></td>
-                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Half</span></td>
-                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{workorder.work_order_ratio_h_consumption}</span></td>
+                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Half</span></td>
+                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{workorder.work_order_ratio_h_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td ><span  style={tablecss}>{fabricsub.work_order_sub_36_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_38_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_40_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_42_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_44_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_46_h}</span></td>
-                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_48_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_50_h}</span></td>
+                                                                    <td ><span  className='font-bold' style={tablecss}>{fabricsub.work_order_sub_36_h}</span></td>
+                                                                    <td  ><span  className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_38_h}</span></td>
+                                                                    <td  ><span className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_40_h}</span></td>
+                                                                    <td  ><span className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_42_h}</span></td>
+                                                                    <td  ><span className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_44_h}</span></td>
+                                                                    <td  ><span className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_46_h}</span></td>
+                                                                    <td  ><span className='font-bold'  style={tablecss}>{fabricsub.work_order_sub_48_h}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_50_h}</span></td>
                                                                 </tr>
                                                             </td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_half_total}</span></td>
@@ -185,7 +185,7 @@ const WorkOrder = () => {
                                                         <td rowSpan={3} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_amount}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>RATIO</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
-                                                                <tr style={{display:'flex',justifyContent:'space-between'}}>
+                                                                <tr style={{display:'flex',justifyContent:'space-around'}}>
                                                                     <td ><span style={tablecss}>{fabricsub.work_order_sub_36_ratio}</span></td>
                                                                     <td ><span style={tablecss}>{fabricsub.work_order_sub_38_ratio}</span></td>
                                                                     <td ><span style={tablecss}>{fabricsub.work_order_sub_40_ratio}</span></td>
@@ -214,18 +214,18 @@ const WorkOrder = () => {
                                                             </td>
                                                         </tr>
                                                         <tr style={{border:"1px solid rgb(0, 0, 0)"}}>
-                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Full</span></td>
-                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{workorder.work_order_ratio_consumption}</span></td>
+                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Full</span></td>
+                                                            <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{workorder.work_order_ratio_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_36_pcs + fabricsub.work_order_sub_36_ratio + fabricsub.work_order_sub_36_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_38_pcs + fabricsub.work_order_sub_38_ratio + fabricsub.work_order_sub_38_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_40_pcs + fabricsub.work_order_sub_40_ratio + fabricsub.work_order_sub_40_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_42_pcs + fabricsub.work_order_sub_42_ratio + fabricsub.work_order_sub_42_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_44_pcs + fabricsub.work_order_sub_44_ratio + fabricsub.work_order_sub_44_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_46_pcs + fabricsub.work_order_sub_46_ratio + fabricsub.work_order_sub_46_bits}</span></td>
-                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_48_pcs + fabricsub.work_order_sub_48_ratio + fabricsub.work_order_sub_48_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_50_pcs + fabricsub.work_order_sub_50_ratio + fabricsub.work_order_sub_50_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_36_pcs + fabricsub.work_order_sub_36_ratio + fabricsub.work_order_sub_36_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_38_pcs + fabricsub.work_order_sub_38_ratio + fabricsub.work_order_sub_38_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_40_pcs + fabricsub.work_order_sub_40_ratio + fabricsub.work_order_sub_40_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_42_pcs + fabricsub.work_order_sub_42_ratio + fabricsub.work_order_sub_42_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_44_pcs + fabricsub.work_order_sub_44_ratio + fabricsub.work_order_sub_44_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_46_pcs + fabricsub.work_order_sub_46_ratio + fabricsub.work_order_sub_46_bits}</span></td>
+                                                                    <td ><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_48_pcs + fabricsub.work_order_sub_48_ratio + fabricsub.work_order_sub_48_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.work_order_sub_50_pcs + fabricsub.work_order_sub_50_ratio + fabricsub.work_order_sub_50_bits}</span></td>
                                                                 </tr>
                                                             </td>
                                                         </tr>

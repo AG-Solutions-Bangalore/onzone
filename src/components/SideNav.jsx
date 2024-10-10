@@ -17,7 +17,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavType = "dark";
 
   const sidenavTypes = {
-    dark: "bg-gradient-to-br from-white to-green-900 shadow-lg shadow-blue-900",
+    dark: "bg-gradient-to-br from-white to-green-900 ",
     white: "bg-white shadow-sm",
     transparent: "bg-transparent",
   };

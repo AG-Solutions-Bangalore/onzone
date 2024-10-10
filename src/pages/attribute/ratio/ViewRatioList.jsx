@@ -9,7 +9,7 @@ import Layout from '../../../layout/Layout'
 import BASE_URL from '../../../base/BaseUrl';
 import AttributeFilter from '../../../components/AttributeFilter';
 const tablelabel = { fontWeight: 'bold' };
-const tablecss = { fontSize: '14px' };
+const tablecss = { fontSize: '12px' };
 const ViewRatioList = () => {
     const {id} = useParams()
     const componentRef = useRef();
@@ -102,15 +102,15 @@ const ViewRatioList = () => {
                                                         <tr style={{border:"1px solid black"}}>
                                                             <td rowSpan={5} style={{border:"1px solid black",textAlign:"center"}}><span style={tablecss}></span></td>
                                                             <td rowSpan={5} style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>{fabricsub.ratio_mtr}</span></td>
-                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>Half</span></td>
-                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>1.2</span></td>
+                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span className='font-bold' style={tablecss}>Half</span></td>
+                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span className='font-bold' style={tablecss}>1.2</span></td>
                                                             <td style={{border:"1px solid black"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>0</span></td>
-                                                                    <td><span style={tablecss}>0</span></td>
-                                                                    <td><span style={tablecss}>0</span></td>
-                                                                    <td><span style={tablecss}>0</span></td>
-                                                                    <td><span style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
                                                                 </tr>
                                                             </td>
                                                             <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>0</span></td>
@@ -154,15 +154,15 @@ const ViewRatioList = () => {
                                                             </td>
                                                         </tr>
                                                         <tr style={{border:"1px solid black"}}>
-                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>Full</span></td>
-                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>1.4</span></td>
+                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span className='font-bold' style={tablecss}>Full</span></td>
+                                                            <td style={{border:"1px solid black",textAlign:'center'}}><span className='font-bold' style={tablecss}>1.4</span></td>
                                                             <td style={{border:"1px solid black"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.ratio_36_pcs + fabricsub.ratio_36_ratio + fabricsub.ratio_36_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.ratio_38_pcs + fabricsub.ratio_38_ratio + fabricsub.ratio_38_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.ratio_40_pcs + fabricsub.ratio_40_ratio + fabricsub.ratio_40_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.ratio_42_pcs + fabricsub.ratio_42_ratio + fabricsub.ratio_42_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.ratio_44_pcs + fabricsub.ratio_44_ratio + fabricsub.ratio_44_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_36_pcs + fabricsub.ratio_36_ratio + fabricsub.ratio_36_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_38_pcs + fabricsub.ratio_38_ratio + fabricsub.ratio_38_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_40_pcs + fabricsub.ratio_40_ratio + fabricsub.ratio_40_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_42_pcs + fabricsub.ratio_42_ratio + fabricsub.ratio_42_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_44_pcs + fabricsub.ratio_44_ratio + fabricsub.ratio_44_bits}</span></td>
                                                                 </tr>
                                                             </td>
                                                         </tr>
