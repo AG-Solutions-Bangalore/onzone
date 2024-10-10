@@ -438,11 +438,10 @@ const AddWorkOrderList = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
+      
+      <h3 className="text-center md:text-left  text-lg md:text-xl font-bold">
         Create Work Order
         </h3>
-      </div>
       <div className="w-full p-4 mt-2 bg-white shadow-lg rounded-xl">
         <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-4">
@@ -652,10 +651,10 @@ const AddWorkOrderList = () => {
           </div>
 
           <hr className="border-b bg-black mb-4" />
-          <div className="flex flex-col">
+          <div className="flex   flex-col">
             {users.map((user, index) => (
               <>
-              <div key={index} className="mb-4">
+              <div key={index} className="mb-2">
                 {/* First Row */}
                 <div className="flex flex-wrap justify-start gap-1 mb-2">
                   {/* T Code */}
@@ -938,7 +937,7 @@ const AddWorkOrderList = () => {
                  {/* Delete Button */}
                  <div className="w-1/2 py-1   lg:w-1/12">
                     <IconButton
-                      className="w-8 h-8"
+                      className="w-6 h-6"
                       onClick={() => removeUser(index)}
                     >
                       <Delete />
