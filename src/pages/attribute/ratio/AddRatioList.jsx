@@ -61,7 +61,7 @@ const AddRatioList = () => {
                 <TextField
                   fullWidth
                   type="file"
-                  label="Ratio File"
+                  label="Ratio File *"
                   required
                   autoComplete="Name"
                   name="uploaded_file"

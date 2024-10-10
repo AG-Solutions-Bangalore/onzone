@@ -156,7 +156,7 @@ const EditHalfRatio = () => {
                 value={ratioHalf.ratio_range}
                 onChange={(e) => onInputChange(e)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md  transition-all"
               />
             </div>
             <FormControl fullWidth>

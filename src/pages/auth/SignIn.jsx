@@ -63,20 +63,16 @@ const SignIn = () => {
           <div className="hidden lg:block lg:w-1/2 h-full">
             <Carousel autoplay loop>
               <img
-                src="/img/1.jpg"
+                src="/img/11.png"
                 alt="Slide 1"
                 className="h-full w-full object-cover"
               />
               <img
-                src="/img/2.jpg"
+                src="/img/12.png"
                 alt="Slide 2"
                 className="h-full w-full object-cover"
               />
-              <img
-                src="/img/3.jpg"
-                alt="Slide 3"
-                className="h-full w-full object-cover"
-              />
+              
             </Carousel>
           </div>
   

@@ -96,7 +96,7 @@ const AddHalfRatio = () => {
       </div>
       <div className="w-full mt-5 p-4 bg-white shadow-lg rounded-xl">
         <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div className="form-group">
               <Input
                 label="Ratio Range"
@@ -105,7 +105,7 @@ const AddHalfRatio = () => {
                 value={ratioHalf.ratio_range}
                 onChange={(e) => onInputChange(e)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md  transition-all"
               />
             </div>
             <FormControl fullWidth>

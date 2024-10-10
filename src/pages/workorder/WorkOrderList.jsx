@@ -9,6 +9,7 @@ import MUIDataTable from 'mui-datatables';
 import { CiEdit } from 'react-icons/ci';
 import { IoDownloadOutline, IoEyeOutline } from 'react-icons/io5';
 import { IoIosArrowDropright } from 'react-icons/io';
+import Moment from "moment";
 
 const WorkOrderList = () => {
     const [workOrderData, setWorkOrderData] = useState(null);
@@ -96,6 +97,9 @@ const WorkOrderList = () => {
         options: {
           filter: true,
           sort: false,
+          customBodyRender: (value) => {
+            return Moment(value).format("DD-MM-YYYY");
+          },
         },
       },
       {

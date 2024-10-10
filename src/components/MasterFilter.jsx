@@ -18,7 +18,7 @@ const MasterFilter = () => {
           color: "from-blue-500 to-cyan-400",
         },
         {
-          label: "factory",
+          label: "Factory",
           path: "/factory",
           color: "from-red-500 to-purple-400",
         },

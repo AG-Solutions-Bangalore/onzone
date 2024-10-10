@@ -138,6 +138,7 @@ const Profile = () => {
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight "
               id="name"
               type="text"
+              required
               value={firstName}
               onChange={handleFirstNameChange}
               placeholder="Enter your name"
@@ -150,6 +151,7 @@ const Profile = () => {
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight "
               id="mobile"
               type="tel"
+              required
               value={phone}
               onChange={handlePhoneChange}
               placeholder="Enter your mobile number"
@@ -162,6 +164,7 @@ const Profile = () => {
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight "
               id="email"
               type="email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"

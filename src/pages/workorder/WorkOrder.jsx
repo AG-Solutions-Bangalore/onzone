@@ -9,7 +9,7 @@ import Moment from 'moment';
 import { Print } from '@mui/icons-material';
 
 const tablelabel = { fontWeight: 'bold' };
-const tablecss = { fontSize: '14px' };
+const tablecss = { fontSize: '12px' };
 const WorkOrder = () => {
     const {id} = useParams()
     const componentRef = useRef();
@@ -33,6 +33,18 @@ const WorkOrder = () => {
           setLoader(false)
         });
       }, []);
+
+      const sizeCell = (content) => (
+        <td style={{
+            border: '1px solid #000',
+            borderTop: 'none',
+            borderBottom: 'none',
+            padding: '4px',
+            textAlign: 'center'
+        }}>
+            <span style={tablecss}>{content}</span>
+        </td>
+    );
   return (
     <Layout>
          <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
@@ -116,14 +128,14 @@ const WorkOrder = () => {
                                                         <th style={{border:'1px solid #000'}}>Cons</th>
                                                         <th style={{border:'1px solid #000'}}>Size
                                                             <tr style={{display:'flex',justifyContent:'space-around',border:'1px solid #000'}}>
-                                                                <th>36</th>
-                                                                <th>38</th>
-                                                                <th>40</th>
-                                                                <th>42</th>
-                                                                <th>44</th>
-                                                                <th>46</th>
-                                                                <th>48</th>
-                                                                <th>50</th>
+                                                                <th  >36</th>
+                                                                <th  >38</th>
+                                                                <th >40</th>
+                                                                <th >42</th>
+                                                                <th >44</th>
+                                                                <th >46</th>
+                                                                <th >48</th>
+                                                                <th >50</th>
                                                             </tr>
                                                         </th>
                                                         <th style={{border:'1px solid #000'}}>Total</th>
@@ -140,13 +152,13 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{workorder.work_order_ratio_h_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_36_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_38_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_40_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_42_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_44_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_46_h}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_48_h}</span></td>
+                                                                    <td ><span  style={tablecss}>{fabricsub.work_order_sub_36_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_38_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_40_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_42_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_44_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_46_h}</span></td>
+                                                                    <td  ><span   style={tablecss}>{fabricsub.work_order_sub_48_h}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.work_order_sub_50_h}</span></td>
                                                                 </tr>
                                                             </td>
@@ -157,13 +169,13 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>PCS</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_36_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_38_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_40_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_42_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_44_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_46_pcs}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_48_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_36_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_38_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_40_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_42_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_44_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_46_pcs}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_48_pcs}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.work_order_sub_50_pcs}</span></td>
                                                                 </tr>
                                                             </td>
@@ -173,14 +185,14 @@ const WorkOrder = () => {
                                                         <td rowSpan={3} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_amount}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>RATIO</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
-                                                                <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_36_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_38_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_40_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_42_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_44_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_46_ratio}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_48_ratio}</span></td>
+                                                                <tr style={{display:'flex',justifyContent:'space-between'}}>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_36_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_38_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_40_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_42_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_44_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_46_ratio}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_48_ratio}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.work_order_sub_50_ratio}</span></td>
                                                                 </tr>
                                                             </td>
@@ -190,13 +202,13 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>BITS</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_36_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_38_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_40_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_42_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_44_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_46_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_48_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_36_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_38_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_40_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_42_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_44_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_46_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_48_bits}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.work_order_sub_50_bits}</span></td>
                                                                 </tr>
                                                             </td>
@@ -206,13 +218,13 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{workorder.work_order_ratio_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                                 <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_36_pcs + fabricsub.work_order_sub_36_ratio + fabricsub.work_order_sub_36_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_38_pcs + fabricsub.work_order_sub_38_ratio + fabricsub.work_order_sub_38_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_40_pcs + fabricsub.work_order_sub_40_ratio + fabricsub.work_order_sub_40_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_42_pcs + fabricsub.work_order_sub_42_ratio + fabricsub.work_order_sub_42_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_44_pcs + fabricsub.work_order_sub_44_ratio + fabricsub.work_order_sub_44_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_46_pcs + fabricsub.work_order_sub_46_ratio + fabricsub.work_order_sub_46_bits}</span></td>
-                                                                    <td><span style={tablecss}>{fabricsub.work_order_sub_48_pcs + fabricsub.work_order_sub_48_ratio + fabricsub.work_order_sub_48_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_36_pcs + fabricsub.work_order_sub_36_ratio + fabricsub.work_order_sub_36_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_38_pcs + fabricsub.work_order_sub_38_ratio + fabricsub.work_order_sub_38_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_40_pcs + fabricsub.work_order_sub_40_ratio + fabricsub.work_order_sub_40_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_42_pcs + fabricsub.work_order_sub_42_ratio + fabricsub.work_order_sub_42_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_44_pcs + fabricsub.work_order_sub_44_ratio + fabricsub.work_order_sub_44_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_46_pcs + fabricsub.work_order_sub_46_ratio + fabricsub.work_order_sub_46_bits}</span></td>
+                                                                    <td ><span style={tablecss}>{fabricsub.work_order_sub_48_pcs + fabricsub.work_order_sub_48_ratio + fabricsub.work_order_sub_48_bits}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.work_order_sub_50_pcs + fabricsub.work_order_sub_50_ratio + fabricsub.work_order_sub_50_bits}</span></td>
                                                                 </tr>
                                                             </td>
@@ -230,14 +242,14 @@ const WorkOrder = () => {
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>
                                                             <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_36_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_38_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_40_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_42_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_44_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_46_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_48_h}</span></td>
-                                                                <td><span style={tablecss}>{wsub.work_order_sub_50_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_36_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_38_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_40_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_42_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_44_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_46_h}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.work_order_sub_48_h}</span></td>
+                                                              <td><span style={tablecss}>{wsub.work_order_sub_50_h}</span></td>
                                                             </tr></span>
                                                         </td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{wsub.work_order_sub_half_total}</span></td>
@@ -249,13 +261,13 @@ const WorkOrder = () => {
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                             <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                                                <td><span style={tablecss}>{wsub.sum_36_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_38_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_40_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_42_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_44_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_46_pcs}</span></td>
-                                                                <td><span style={tablecss}>{wsub.sum_48_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_36_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_38_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_40_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_42_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_44_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_46_pcs}</span></td>
+                                                                <td ><span style={tablecss}>{wsub.sum_48_pcs}</span></td>
                                                                 <td><span style={tablecss}>{wsub.sum_50_pcs}</span></td>
                                                             </tr>
                                                         </td>
