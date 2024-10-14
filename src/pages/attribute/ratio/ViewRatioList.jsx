@@ -91,6 +91,9 @@ const ViewRatioList = () => {
                                                             <th>40</th>
                                                             <th>42</th>
                                                             <th>44</th>
+                                                            <th>46</th>
+                                                            <th>48</th>
+                                                            <th>50</th>
                                                         </tr>
                                                     </th>
                                                     <th>Total</th>
@@ -111,6 +114,9 @@ const ViewRatioList = () => {
                                                                     <td><span className='font-bold' style={tablecss}>0</span></td>
                                                                     <td><span className='font-bold' style={tablecss}>0</span></td>
                                                                     <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>0</span></td>
                                                                 </tr>
                                                             </td>
                                                             <td style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>0</span></td>
@@ -125,6 +131,9 @@ const ViewRatioList = () => {
                                                                     <td><span style={tablecss}>{fabricsub.ratio_40_pcs}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_42_pcs}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_44_pcs}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_46_pcs}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_48_pcs}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_50_pcs}</span></td>
                                                                 </tr>
                                                             </td>
                                                             <td rowSpan={4} style={{border:"1px solid black",textAlign:'center'}}><span style={tablecss}>{fabricsub.ratio_total}</span></td>
@@ -138,6 +147,9 @@ const ViewRatioList = () => {
                                                                     <td><span style={tablecss}>{fabricsub.ratio_40_ratio}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_42_ratio}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_44_ratio}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_46_ratio}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_48_ratio}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_50_ratio}</span></td>
                                                                 </tr>
                                                             </td>
                                                         </tr>
@@ -150,6 +162,9 @@ const ViewRatioList = () => {
                                                                     <td><span style={tablecss}>{fabricsub.ratio_40_bits}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_42_bits}</span></td>
                                                                     <td><span style={tablecss}>{fabricsub.ratio_44_bits}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_46_bits}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_48_bits}</span></td>
+                                                                    <td><span style={tablecss}>{fabricsub.ratio_50_bits}</span></td>
                                                                 </tr>
                                                             </td>
                                                         </tr>
@@ -163,6 +178,9 @@ const ViewRatioList = () => {
                                                                     <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_40_pcs + fabricsub.ratio_40_ratio + fabricsub.ratio_40_bits}</span></td>
                                                                     <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_42_pcs + fabricsub.ratio_42_ratio + fabricsub.ratio_42_bits}</span></td>
                                                                     <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_44_pcs + fabricsub.ratio_44_ratio + fabricsub.ratio_44_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_46_pcs + fabricsub.ratio_46_ratio + fabricsub.ratio_46_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_48_pcs + fabricsub.ratio_48_ratio + fabricsub.ratio_48_bits}</span></td>
+                                                                    <td><span className='font-bold' style={tablecss}>{fabricsub.ratio_50_pcs + fabricsub.ratio_50_ratio + fabricsub.ratio_50_bits}</span></td>
                                                                 </tr>
                                                             </td>
                                                         </tr>
