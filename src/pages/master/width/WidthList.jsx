@@ -97,31 +97,25 @@ const WidthList = () => {
     viewColumns: true,
     download: false,
     print: false,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
+    customToolbar: () => {
+      return (
+        <Link
+        to="/add-width"
+        className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+      >
+        + Width
+      </Link>
+       
+      );
     },
   };
   return (
     <Layout>
        <MasterFilter/>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Width List
-        </h3>
-
-        <Link
-          to="/add-width"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          + Add Width
-        </Link>
-      </div>
+      
       <div className="mt-5">
         <MUIDataTable
+        title='Width List'
           data={widthData ? widthData : []}
           columns={columns}
           options={options}

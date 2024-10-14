@@ -122,34 +122,27 @@ const RatioList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    // rowsPerPage: 5,
-    // rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
     download: false,
     print: false,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
+   
+    customToolbar: () => {
+      return (
+        <Link to='/add-ratio' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md">
+        + Ratio
+      </Link>
+       
+      );
     },
   };
   return (
     <Layout>
        <AttributeFilter/>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Ratio List
-        </h3>
-
-        <Link to='/add-ratio' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
-          + Add Ratio
-        </Link>
-      </div>
-      <div className="mt-5">
+      
+      <div className="mt-2">
         <MUIDataTable
+        title='Ratio List'
           data={ratioData ? ratioData : []}
           columns={columns}
           options={options}

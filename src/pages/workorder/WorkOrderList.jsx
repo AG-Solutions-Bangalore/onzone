@@ -4,12 +4,13 @@ import { ContextPanel } from '../../utils/ContextPanel';
 import { Link, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../base/BaseUrl';
 import axios from 'axios';
-import { FaArrowAltCircleRight, FaDownload, FaEdit, FaEye, FaStreetView } from 'react-icons/fa';
+import { FaArrowAltCircleRight, FaDownload, FaEdit, FaEye, FaRegFilePdf, FaStreetView } from 'react-icons/fa';
 import MUIDataTable from 'mui-datatables';
 import { CiEdit } from 'react-icons/ci';
 import { IoDownloadOutline, IoEyeOutline } from 'react-icons/io5';
 import { IoIosArrowDropright } from 'react-icons/io';
 import Moment from "moment";
+import { Button, IconButton } from '@mui/material';
 
 const WorkOrderList = () => {
     const [workOrderData, setWorkOrderData] = useState(null);
@@ -183,24 +184,26 @@ const WorkOrderList = () => {
       viewColumns: true,
       download: false,
       print: false,
+      customToolbar: () => {
+        return (
+            <Link
+          to="/add-work-order"
+          title='Add Work Order'
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+        >
+          + New
+        </Link>
+         
+        );
+      },
       
     };
   return (
    <Layout>
-  <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Work Order List
-        </h3>
-
-        <Link
-          to="/add-work-order"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          + Add Work Order
-        </Link>
-      </div>
-      <div className="mt-5">
+ 
+      <div >
         <MUIDataTable
+        title=" Work Order List"
           data={workOrderData ? workOrderData : []}
           columns={columns}
           options={options}

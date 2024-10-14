@@ -231,7 +231,7 @@ const AddHalfRatio = () => {
 
             {/* Back Button */}
 
-            <Link to="/factory">
+            <Link to="/half-ratio">
               <Button className="mr-2 mb-2">
                 <div className="flex gap-1">
                   <MdArrowBack className="w-5 h-5" />

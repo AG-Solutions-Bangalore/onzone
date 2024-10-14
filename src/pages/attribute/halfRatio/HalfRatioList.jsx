@@ -115,31 +115,25 @@ const HalfRatioList = () => {
     viewColumns: true,
     download: false,
     print: false,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
+    customToolbar: () => {
+      return (
+        <Link
+        to="/add-halfratio"
+        className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+      >
+        + H-Ratio
+      </Link>
+       
+      );
     },
   };
   return (
     <Layout>
        <AttributeFilter/>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Half Ratio List
-        </h3>
-
-        <Link
-          to="/add-halfratio"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          + Add Half Ratio
-        </Link>
-      </div>
-      <div className="mt-5">
+      
+      <div className="mt-2">
         <MUIDataTable
+        title='Half Ratio List'
           data={halfRatioData ? halfRatioData : []}
           columns={columns}
           options={options}

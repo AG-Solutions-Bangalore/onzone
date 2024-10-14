@@ -124,34 +124,24 @@ const BrandList = () => {
     viewColumns: true,
     download: false,
     print: false,
+    customToolbar: () => {
+      return (
+        <Link
+        to="/add-brand"
+        className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+      >
+        + Brand
+      </Link>
+       
+      );
+    },
     
   };
 
   return (
     <Layout>
       <MasterFilter/>
-      <motion.div
-        className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Brand List
-        </h3>
-
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Link
-            to="/add-brand"
-            className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-          >
-            + Add Brand
-          </Link>
-        </motion.div>
-      </motion.div>
+      
 
       <motion.div
         className="mt-5"
@@ -160,6 +150,7 @@ const BrandList = () => {
         transition={{ duration: 0.6 }}
       >
         <MUIDataTable
+        title='Brand List'
           data={brandData ? brandData : []}
           columns={columns}
           options={options}

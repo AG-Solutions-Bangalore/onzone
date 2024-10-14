@@ -8,6 +8,7 @@ import BASE_URL from '../../../base/BaseUrl';
 import axios from 'axios';
 import AttributeFilter from '../../../components/AttributeFilter';
 import { MdArrowBack, MdSend } from 'react-icons/md';
+import { Input } from '@material-tailwind/react';
 
 const AddRatioList = () => {
     const {id} = useParams()
@@ -58,7 +59,7 @@ const AddRatioList = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <div className="mb-4">
-                <TextField
+                <Input
                   fullWidth
                   type="file"
                   label="Ratio File *"

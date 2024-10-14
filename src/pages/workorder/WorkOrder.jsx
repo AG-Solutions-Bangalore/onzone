@@ -9,7 +9,7 @@ import Moment from 'moment';
 import { Print } from '@mui/icons-material';
 
 const tablelabel = { fontWeight: 'bold' };
-const tablecss = { fontSize: '12px' };
+const tablecss = { fontSize: '16px' };
 const WorkOrder = () => {
     const {id} = useParams()
     const componentRef = useRef();
@@ -47,7 +47,7 @@ const WorkOrder = () => {
     );
   return (
     <Layout>
-         <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+         <div className="flex flex-col md:flex-row justify-between items-center bg-white  p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Work Order
         </h3>
@@ -63,7 +63,7 @@ const WorkOrder = () => {
       )}
       {!loader && (
         <>
-          <div className="mx-auto w-full mt-8 ">
+          <div className="mx-auto w-full mt-4 ">
             <div className="bg-white shadow-md rounded-lg">
               <div
                 className={`text-right p-4 ${
@@ -85,36 +85,28 @@ const WorkOrder = () => {
                 </ul>
               </div>
               <div className="p-5" ref={componentRef}>
-                <div className="mt-2 mx-4 text-base">
+                <div className="mx-4 text-base">
                   <table className="w-full">
                     <tbody>
                       <tr>
-                        <td>Factory</td>
-                        <td>:</td>
-                        <td className="font-bold">{workorder.work_order_factory}</td>
-                        <td>Ratio</td>
-                        <td>:</td>
-                        <td className="font-bold">{workorder.work_order_ratio}</td>
-                        <td>Work Date</td>
-                        <td>:</td>
-                        <td className="font-bold">{Moment(workorder.work_order_date).format('DD-MM-YYYY')}</td>
+                        <td>Factory&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_factory}</span></td>
+                      
+                       
+                        <td>Ratio&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_ratio}</span></td>
+                  
+                        <td>Width&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_width}</span></td>
+                        
+                        <td>Work Date&nbsp;:&nbsp;<span className='font-bold'>{Moment(workorder.work_order_date).format('DD-MM-YYYY')}</span></td>
+                        <td>Brands&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_brand}</span></td>
                       </tr>
                       <tr>
-                        <td>Brands</td>
-                        <td>:</td>
-                        <td className="font-bold">{workorder.work_order_brand}</td>
-                        <td>Style</td>
-                        <td>:</td>
-                        <td className="font-bold">{workorder.work_order_style_type}</td>
-                        <td>Width</td>
-                        <td>:</td>
-                        <td className="font-bold">{workorder.work_order_width}</td>
+                       
+                       
+                        <td>Remarks&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_remarks}</span></td>
+                        
+                        
                       </tr>
-                      <tr>
-                        <td>Remarks</td>
-                        <td>:</td>
-                        <td colSpan="7" className="font-bold">{workorder.work_order_remarks}</td>
-                      </tr>
+                   
                     </tbody>
                   </table>
                   <hr className="my-4  border border-gray-400" />
@@ -127,7 +119,7 @@ const WorkOrder = () => {
                                                         <th style={{border:'1px solid #000'}}>Sleeve</th>
                                                         <th style={{border:'1px solid #000'}}>Cons</th>
                                                         <th style={{border:'1px solid #000'}}>Size
-                                                            <tr style={{display:'flex',justifyContent:'space-around',border:'1px solid #000'}}>
+                                                            <tr style={{display:'flex',justifyContent:'space-around',border:'1px solid #000',fontSize:'20px'}}>
                                                                 <th  >36</th>
                                                                 <th  >38</th>
                                                                 <th >40</th>
@@ -235,8 +227,8 @@ const WorkOrder = () => {
                                                 {workorderfooter.map((wsub,key)=>(
                                                 <tfoot>
                                                     <tr>
-                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Total Fabric - SELF FOLDING</span></td>
-                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{Math.round(wsub.work_order_sub_length).toFixed(2)}</span></td>
+                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
+                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{Math.floor(wsub.work_order_sub_length * 100) / 100}</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Half</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
@@ -255,7 +247,7 @@ const WorkOrder = () => {
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{wsub.work_order_sub_half_total}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colSpan={2} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Comments - FINE COTTON</span></td>
+                                                        <td colSpan={2} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>Full</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>

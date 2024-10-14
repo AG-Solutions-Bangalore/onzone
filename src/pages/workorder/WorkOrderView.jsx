@@ -144,23 +144,24 @@ const WorkOrderView = () => {
     viewColumns: true,
     download: false,
     print: false,
+    customToolbar: () => {
+      return (
+        <Link
+        onClick={() => openModal(id)}
+        className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+      >
+        Close Work 
+      </Link>
+       
+      );
+    },
   };
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Work Order
-        </h3>
-
-        <Link
-          onClick={() => openModal(id)}
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          Close Work Order
-        </Link>
-      </div>
-      <div className="mt-5">
+      
+      <div >
         <MUIDataTable
+        title='Work Order'
           data={workOrderData ? workOrderData : []}
           columns={columns}
           options={options}

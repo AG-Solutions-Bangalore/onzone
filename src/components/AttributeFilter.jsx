@@ -23,7 +23,7 @@ const AttributeFilter = () => {
     navigate(path);
   };
   return (
-    <div className="flex flex-wrap justify-between mt-6 gap-4">
+    <div className="flex flex-wrap justify-between  gap-4">
     {buttons.map((button, index) => (
       <button
         key={index}
