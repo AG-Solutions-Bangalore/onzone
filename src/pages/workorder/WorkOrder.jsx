@@ -8,8 +8,113 @@ import BASE_URL from '../../base/BaseUrl'
 import Moment from 'moment';
 import { Print } from '@mui/icons-material';
 
-const tablelabel = { fontWeight: 'bold' };
-const tablecss = { fontSize: '14px' };
+const tablecss = { 
+  fontSize: '12px',  
+  lineHeight: '1.2'  
+};
+
+const printStyles = `
+  @media print {
+    @page {
+      size: A4;
+      margin: 2mm 2mm 2mm 2mm;  // Reduced page margins
+      marks: none;
+    }
+
+    /* Hide default headers and footers */
+    html {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Remove URLs and other default print information */
+     @page { margin: 2mm 2mm 2mm 2mm; } 
+    @page :first { margin-top: 2mm; margin-bottom: 2mm; margin-left: 2mm; margin-right: 2mm; } 
+    @page :left { margin-left: 2mm; margin-right: 2mm; } 
+    @page :right { margin-left: 2mm; margin-right: 2mm; }
+    
+    /* General print layout optimizations */
+    * {
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.2 !important;
+    }
+    
+    /* Header area optimizations */
+    .print-header {
+      margin-bottom: 0.2rem !important;
+   
+    }
+    
+    /* Table-specific print styles */
+    table {
+      font-size: 11px !important;
+      border-collapse: collapse !important;
+      width: 100% !important;
+    }
+    
+    td, th {
+      padding: 2px 1px !important;
+      height: auto !important;
+      line-height: 1 !important;
+    }
+    
+    tr {
+      page-break-inside: avoid;
+      height: auto !important;
+    }
+    
+    /* Remove extra spacing */
+    .p-5, .p-12, .p-2 {
+      padding: 2px !important;
+    }
+    
+    .mx-4 {
+      margin: 0 !important;
+    }
+    
+    /* Optimize spacing for specific elements */
+    .print-compact {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    /* Hide unnecessary elements when printing */
+    .no-print {
+      display: none !important;
+    }
+    
+    /* Ensure table headers stay compact */
+    thead th {
+      padding: 2px 1px !important;
+      font-size: 11px !important;
+    }
+    
+    /* Optimize table rows */
+    tbody tr {
+      min-height: 0 !important;
+    }
+    
+    /* Adjust font sizes for different elements */
+    .text-sm {
+      font-size: 10px !important;
+    }
+    
+    .font-bold {
+      font-weight: 600 !important;
+    }
+    
+    /* Optimize table borders */
+    table, th, td {
+      border-width: 1px !important;
+    }
+   /* for remarks last  */
+    tfoot tr:last-child td {
+  padding: 3rem !important;
+  height: 4rem !important;
+}
+  }
+`;
 const WorkOrder = () => {
     const {id} = useParams()
     const componentRef = useRef();
@@ -17,6 +122,19 @@ const WorkOrder = () => {
     const [workordersub, setWorkOrderSub] = useState({});
     const [workorderfooter, setWorkOrderFooter] = useState([]);
     const [loader, setLoader]= useState(true);
+
+    useEffect(() => {
+      // Add print styles to document head
+      const styleSheet = document.createElement("style")
+      styleSheet.type = "text/css"
+      styleSheet.innerText = printStyles
+      document.head.appendChild(styleSheet)
+      
+      // Cleanup on unmount
+      return () => {
+          document.head.removeChild(styleSheet)
+      }
+  }, []);
     useEffect(() => {
        
     
@@ -34,17 +152,7 @@ const WorkOrder = () => {
         });
       }, []);
 
-      const sizeCell = (content) => (
-        <td style={{
-            border: '1px solid #000',
-            borderTop: 'none',
-            borderBottom: 'none',
-            padding: '4px',
-            textAlign: 'center'
-        }}>
-            <span style={tablecss}>{content}</span>
-        </td>
-    );
+      
 
     const renderValue = (value) => {
       return value == '0' ? <span className='text-gray-500' >-</span> : value;
@@ -62,7 +170,7 @@ const WorkOrder = () => {
                     <ReactToPrint
                       trigger={() => (
                         <button className="flex items-center border  border-blue-500 hover:border-green-500 hover:animate-pulse p-2 rounded-lg">
-                          <Print className="mr-2" size={16} />
+                          <Print className="mr-2" size={16}  />
                           Print
                         </button>
                       )}
@@ -76,7 +184,7 @@ const WorkOrder = () => {
       {loader && (
         <CircularProgress
           disableShrink
-          className="ml-[600px] mt-[300px] mb-[300px]"
+          className="ml-[600px] mt-[300px] mb-[300px] no-print"
           color="secondary"
         />
       )}
@@ -89,23 +197,12 @@ const WorkOrder = () => {
                   localStorage.getItem("user_type_id") == 4 ? "hidden" : ""
                 }`}
               >
-                {/* <ul className="flex justify-end">
-                  <li>
-                    <ReactToPrint
-                      trigger={() => (
-                        <button className="flex items-center border  border-blue-500 p-2 rounded-lg">
-                          <Print className="mr-2" size={18} />
-                          Print
-                        </button>
-                      )}
-                      content={() => componentRef.current}
-                    />
-                  </li>
-                </ul> */}
+              
               </div>
-              <div className="p-5" ref={componentRef}>
+              <div className="print-compact" ref={componentRef}>
                 <div className="mx-4 text-base">
-                  <table className="w-full">
+                <div className="print-header">
+                  <table   className="w-full" style={{ marginBottom: '0.2rem' }}>
                     <tbody>
                       <tr  >
                         <td className=' text-sm' >Factory&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_factory}</span></td>
@@ -128,14 +225,14 @@ const WorkOrder = () => {
                    
                     </tbody>
                   </table>
+                  </div>
                   <hr className="my-4  border border-gray-400" />
                   <table style={{width:'100%', border:'1px solid #000'}}>
                                                 <thead>
                                                     <tr style={{background: '#84B0CA',textAlign: 'center',color: 'white'}}>
                                                         <th className='w-1/3' style={{border:'1px solid #000'}}>Swatch</th>
-                                                        <th className='w-5' style={{border:'1px solid #000'}}>Mtrs</th>
-                                                        <th className='w-24 p-2' style={{border:'1px solid #000'}}>Code MRP</th>
-                                                        {/* <th style={{border:'1px solid #000'}}>Sleeve</th> 1 */}
+                                                        <th className='w-1' style={{border:'1px solid #000'}}>Mtrs</th>
+                                                        <th className='w-1' style={{border:'1px solid #000'}}>Code Mrp</th>
                                                         <th className='w-5 p-2' style={{border:'1px solid #000'}}>Cons</th>
                                                         <th style={{border:'1px solid #000'}}>36</th>
                                                         <th style={{border:'1px solid #000'}}>38</th>
@@ -145,29 +242,18 @@ const WorkOrder = () => {
                                                         <th style={{border:'1px solid #000'}}>46</th>
                                                         <th style={{border:'1px solid #000'}}>48</th>
                                                         <th style={{border:'1px solid #000'}}>50</th>
-                                                        {/* <th style={{border:'1px solid #000'}}>Size
-                                                            <tr style={{display:'flex',justifyContent:'space-around',border:'1px solid #000',fontSize:'20px'}}>
-                                                                <th  >36</th>
-                                                                <th  >38</th>
-                                                                <th >40</th>
-                                                                <th >42</th>
-                                                                <th >44</th>
-                                                                <th >46</th>
-                                                                <th >48</th>
-                                                                <th >50</th>
-                                                            </tr>
-                                                        </th> */}
+                                                    
                                                         <th style={{border:'1px solid #000'}}>Total</th>
+                                                        <th style={{border:'1px solid #000'}}>Trim</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {workordersub.map((fabricsub,key)=>(
-                                                        <>
-                                                        <tr style={{border:"1px solid rgb(0, 0, 0)"}}>
+                                                        <React.Fragment key={key}>
+                                                        <tr style={{border:"1px solid rgb(0, 0, 0)", height: 'auto'}}>
                                                             <td rowSpan={5} style={{border:"1px solid rgb(0, 0, 0)",textAlign:"center"}}><span style={tablecss}></span></td>
-                                                            <td rowSpan={5} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_length}</span></td>
+                                                            <td rowSpan={5}  style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span  style={tablecss}  >{fabricsub.work_order_sub_length}</span></td>
                                                             <td rowSpan={2} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_barcode}</span></td>
-                                                            {/* <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Half</span></td> */}
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{workorder.work_order_ratio_h_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_36_h)}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_38_h)}</span></td>
@@ -179,9 +265,9 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_50_h)}</span></td>
                                                             
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_half_total}</span></td>
+                                                            <td rowSpan={5} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         </tr>
                                                         <tr style={{border:"1px solid rgb(0, 0, 0)"}}>
-                                                            {/* <td  style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td> */}
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>PCS</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{renderValue(fabricsub.work_order_sub_36_pcs)}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{renderValue(fabricsub.work_order_sub_38_pcs)}</span></td>
@@ -195,6 +281,7 @@ const WorkOrder = () => {
                                                             
                                                             
                                                             <td rowSpan={4} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_full_total}</span></td>
+                                   
                                                         </tr>
                                                         <tr style={{border:"1px solid rgb(0, 0, 0)"}}>
                                                         <td rowSpan={3} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}>{fabricsub.work_order_sub_amount}</span></td>
@@ -223,7 +310,6 @@ const WorkOrder = () => {
                                                             
                                                         </tr>
                                                         <tr style={{borderBottom:"2px solid rgb(0, 0, 0)"}}>
-                                                            {/* <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Full</span></td> */}
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{workorder.work_order_ratio_consumption}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_36_pcs + fabricsub.work_order_sub_36_ratio + fabricsub.work_order_sub_36_bits)}</span></td>
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_38_pcs + fabricsub.work_order_sub_38_ratio + fabricsub.work_order_sub_38_bits)}</span></td>
@@ -235,16 +321,15 @@ const WorkOrder = () => {
                                                             <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(fabricsub.work_order_sub_50_pcs + fabricsub.work_order_sub_50_ratio + fabricsub.work_order_sub_50_bits)}</span></td>
                                                             
                                                         </tr>
-                                                        </>
+                                                        </React.Fragment>
                                                     ))}
                                                 </tbody>
                                                 {workorderfooter.map((wsub,key)=>(
                                                 <tfoot>
                                                     <tr>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
-                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold p-1' style={tablecss}>{Math.floor(wsub.work_order_sub_length * 100) / 100}</span></td>
+                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold  text-sm' style={tablecss} >{(wsub.work_order_sub_length.toFixed(1))}</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
-                                                        {/* <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Half</span></td> */}
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td className='font-bold' style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span>{renderValue(wsub.work_order_sub_36_h)}</td>
                                                         <td className='font-bold' style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span>{renderValue(wsub.work_order_sub_38_h)}</td>
@@ -260,7 +345,6 @@ const WorkOrder = () => {
                                                     <tr>
                                                         <td colSpan={2} style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
-                                                        {/* <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>Full</span></td> */}
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(wsub.sum_36_pcs)}</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(wsub.sum_38_pcs)}</span></td>
@@ -272,6 +356,9 @@ const WorkOrder = () => {
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{renderValue(wsub.sum_50_pcs)}</span></td>
                                                         
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold' style={tablecss}>{wsub.work_order_sub_full_total}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td colSpan={14} className='p-12' style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                     </tr>
                                                 </tfoot>
                                                 ))}

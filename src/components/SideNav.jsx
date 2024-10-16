@@ -138,10 +138,10 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
 
-          {/* Add more hardcoded routes here as needed */}
+          
         </ul>
       </div>
-      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.0.2</div>
+      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.0.3</div>
     </aside>
    
   );
