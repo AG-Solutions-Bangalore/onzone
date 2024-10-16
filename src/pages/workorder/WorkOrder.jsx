@@ -328,7 +328,7 @@ const WorkOrder = () => {
                                                 <tfoot>
                                                     <tr>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
-                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold  text-sm' style={tablecss} >{(wsub.work_order_sub_length.toFixed(1))}</span></td>
+                                                        <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span className='font-bold  text-sm' style={tablecss} >{wsub.work_order_sub_length ? wsub.work_order_sub_length.toFixed(1) : 'N/A'}</span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span></td>
                                                         <td className='font-bold' style={{border:"1px solid rgb(0, 0, 0)",textAlign:'center'}}><span style={tablecss}></span>{renderValue(wsub.work_order_sub_36_h)}</td>
