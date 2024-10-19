@@ -50,6 +50,7 @@ const EditWorkOrder = () => {
     work_order_sub_b: "",
     work_order_sub_c: "",
     work_order_sub_length: "",
+    work_order_sub_new_length:"",
     work_order_sub_half_shirt: "",
     work_order_sub_full_shirt: "",
   };
@@ -459,7 +460,7 @@ const EditWorkOrder = () => {
             {users.map((user, index) => (
               <div key={index} className="mb-4">
                 {/* First Row */}
-                <div className="flex flex-wrap justify-between gap-1 mb-2">
+                <div className="flex flex-wrap justify-start gap-1 mb-2">
                   {/* T Code */}
                   <div className="w-1/2 lg:w-1/12">
                     <div className="form-group">
@@ -494,6 +495,25 @@ const EditWorkOrder = () => {
                         name="work_order_sub_length"
                         disabled
                         value={user.work_order_sub_length}
+                        onChange={(e) => onChange(e, index)}
+                      />
+                    </div>
+                  </div>
+                  {/* sublength  */}
+                  <div className="w-1/2 lg:w-1/12">
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        label="S-Length"
+                        required
+                        inputProps={{
+                          sx: {
+                            height: "0.35rem",
+                          },
+                        }}
+                        name="work_order_sub_new_length"
+                        disabled
+                        value={user.work_order_sub_new_length}
                         onChange={(e) => onChange(e, index)}
                       />
                     </div>
@@ -663,10 +683,7 @@ const EditWorkOrder = () => {
                       />
                     </div>
                   </div>
-                </div>
 
-                {/* Second Row */}
-                <div className="flex flex-wrap justify-start gap-4 mb-4">
                   {/* Half 50 */}
                   <div className="w-1/2  lg:w-1/12">
                     <div className="form-group">
@@ -722,6 +739,8 @@ const EditWorkOrder = () => {
                     </div>
                   </div>
                 </div>
+
+               
               </div>
             ))}
           </div>

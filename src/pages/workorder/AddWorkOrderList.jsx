@@ -48,6 +48,7 @@ const AddWorkOrderList = () => {
     work_order_sub_b: "",
     work_order_sub_c: "",
     work_order_sub_length: "",
+    work_order_sub_new_length:"",
     work_order_sub_half_shirt: "",
     work_order_sub_full_shirt: "",
     work_order_sub_amount: "",
@@ -656,7 +657,8 @@ const AddWorkOrderList = () => {
               <>
               <div key={index} className="mb-2">
                 {/* First Row */}
-                <div className="flex flex-wrap justify-start gap-1 mb-2">
+                <div className="flex flex-wrap justify-start gap-[3px] mb-2">
+                  
                   {/* T Code */}
                   <div className="w-1/2 lg:w-1/12">
                     <div className="form-group">
@@ -707,6 +709,24 @@ const AddWorkOrderList = () => {
                         }}
                         name="work_order_sub_length"
                         value={user.work_order_sub_length}
+                        onChange={(e) => onChange(e, index)}
+                      />
+                    </div>
+                  </div>
+                  {/* sublength  */}
+                  <div className="w-1/2 lg:w-[88px]">
+                    <div className="form-group">
+                      <TextField
+                        fullWidth
+                        label="S-Length"
+                        required
+                        inputProps={{
+                          sx: {
+                            height: "0.35rem",
+                          },
+                        }}
+                        name="work_order_sub_new_length"
+                        value={user.work_order_sub_new_length}
                         onChange={(e) => onChange(e, index)}
                       />
                     </div>
@@ -934,8 +954,9 @@ const AddWorkOrderList = () => {
                       />
                     </div>
                   </div>
+            
                  {/* Delete Button */}
-                 <div className="w-1/2 py-1   lg:w-1/12">
+                 <div className="w-1/2 py-1   lg:w-[25px]">
                     <IconButton
                       className="w-6 h-6"
                       onClick={() => removeUser(index)}

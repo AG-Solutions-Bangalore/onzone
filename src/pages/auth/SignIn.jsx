@@ -1,5 +1,5 @@
 import { Input, Button, Typography, Carousel, } from "@material-tailwind/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
@@ -12,6 +12,15 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+  const emailInputRef = useRef(null);  // Add this line
+  
+  // Add this useEffect hook
+  useEffect(() => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  }, []);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,6 +126,8 @@ const SignIn = () => {
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
+                    inputRef={emailInputRef}
+                  
                   />
                   <div className="flex justify-between">
                     <Typography
