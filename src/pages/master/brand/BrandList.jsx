@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 const BrandList = () => {
   const [brandData, setBrandData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
+  const { isPanelUp,userType } = useContext(ContextPanel);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +43,6 @@ const BrandList = () => {
     fetchBrandData();
   }, [isPanelUp, navigate]);
 
-
   const handleDelete = async (e, id) => {
     e.preventDefault();
     try {
@@ -54,18 +53,21 @@ const BrandList = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const res = await axios({
-        url: BASE_URL + "/api/delete-brand/" + id, 
+        url: BASE_URL + "/api/delete-brand/" + id,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (res.data.code == "200") {
-        toast.success("Brand Deleted  succesfully")
-        setBrandData((prevUserListData) => 
-          prevUserListData.filter((user) => user.id !== id && user.fabric_brand_status === user.fabric_brand_status)
+        toast.success("Brand Deleted  succesfully");
+        setBrandData((prevUserListData) =>
+          prevUserListData.filter(
+            (user) =>
+              user.id !== id &&
+              user.fabric_brand_status === user.fabric_brand_status
+          )
         );
-       
       } else {
         toast.error("Errro occur while delete the Brand ");
       }
@@ -141,23 +143,32 @@ const BrandList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex gap-2">
-            <motion.div
-              onClick={() => navigate(`/branch-edit/${id}`)}
-              className="flex items-center space-x-2"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer hover:text-blue-500" />
-             
-            </motion.div>
-            <motion.div
-              onClick={(e) => handleDelete(e,id)}
-              className="flex items-center space-x-2"
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
-            </motion.div>
+              <motion.div
+                onClick={() => navigate(`/branch-edit/${id}`)}
+                className="flex items-center space-x-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <CiEdit
+                  title="Edit"
+                  className="h-5 w-5 cursor-pointer hover:text-blue-500"
+                />
+              </motion.div>
+              {userType == "2" ? (
+                <motion.div
+                  onClick={(e) => handleDelete(e, id)}
+                  className="flex items-center space-x-2"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <MdDeleteOutline
+                    title="Delete"
+                    className="h-5 w-5 cursor-pointer hover:text-red-500"
+                  />
+                </motion.div>
+              ) : (
+                ""
+              )}
             </div>
           );
         },
@@ -175,21 +186,18 @@ const BrandList = () => {
     customToolbar: () => {
       return (
         <Link
-        to="/add-brand"
-        className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
-      >
-        + Brand
-      </Link>
-       
+          to="/add-brand"
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
+        >
+          + Brand
+        </Link>
       );
     },
-    
   };
 
   return (
     <Layout>
-      <MasterFilter/>
-      
+      <MasterFilter />
 
       <motion.div
         className="mt-5"
@@ -198,7 +206,7 @@ const BrandList = () => {
         transition={{ duration: 0.6 }}
       >
         <MUIDataTable
-        title='Brand List'
+          title="Brand List"
           data={brandData ? brandData : []}
           columns={columns}
           options={options}

@@ -39,9 +39,11 @@ const SignIn = () => {
       if (res.status === 200) {
         const token = res.data.UserInfo?.token;
         const username = res.data.UserInfo?.user?.full_name
+        const userType = res.data.UserInfo?.user?.user_type_id
         if (token) {
           localStorage.setItem("token", token);
           localStorage.setItem("username", username);
+          localStorage.setItem("user-type", userType);
           navigate("/brand");
         } else {
           toast.error("Login Failed, Token not received.");

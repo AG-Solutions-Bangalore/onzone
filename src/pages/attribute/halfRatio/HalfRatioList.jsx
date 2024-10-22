@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 const HalfRatioList = () => {
   const [halfRatioData, setHalfRatioData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
+  const { isPanelUp ,userType} = useContext(ContextPanel);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -141,11 +141,15 @@ const HalfRatioList = () => {
             className="flex items-center space-x-2">
               <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
             </div>
+            {userType == "2" ? (
             <div 
             onClick={(e) => handleDelete(e,id)}
             className="flex items-center space-x-2">
             <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
             </div>
+             ) : (
+              ""
+            )}
             </div>
           );
         },

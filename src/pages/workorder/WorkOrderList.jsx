@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 const WorkOrderList = () => {
     const [workOrderData, setWorkOrderData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { isPanelUp } = useContext(ContextPanel);
+    const { isPanelUp,userType } = useContext(ContextPanel);
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -206,7 +206,11 @@ const WorkOrderList = () => {
                 className="h-5 w-5 cursor-pointer "
               />
             )}
+                {userType == "2" ? (
              <MdDeleteOutline onClick={(e) => handleDelete(e,id)} title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            ) : (
+              ""
+            )}
               </div>
             );
           },
