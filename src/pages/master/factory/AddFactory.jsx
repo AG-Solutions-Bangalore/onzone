@@ -112,7 +112,7 @@ const AddFactory = () => {
                 value={factory.factory_name}
                 onChange={(e) => onInputChange(e)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md "
               />
             </div>
             <div className="form-group">

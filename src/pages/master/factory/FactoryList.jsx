@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../../../base/BaseUrl";
@@ -8,9 +8,14 @@ import MUIDataTable from "mui-datatables";
 import { CiEdit } from "react-icons/ci";
 import MasterFilter from "../../../components/MasterFilter";
 
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
+import { ContextPanel } from "../../../utils/ContextPanel";
 const FactoryList = () => {
   const [factoryData, setFactoryData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const {isPanelUp} = useContext(ContextPanel)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +40,40 @@ const FactoryList = () => {
     fetchFactoryData();
     setLoading(false);
   }, []);
+
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
+      }
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await axios({
+        url: BASE_URL + "/api/delete-factory/" + id, 
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code == "200") {
+        toast.success("Factory Deleted  succesfully")
+        setFactoryData((prevUserListData) => 
+          prevUserListData.filter((user) => user.id !== id && user.factory_status === user.factory_status)
+        );
+       
+      } else {
+        toast.error("Errro occur while delete the Factory ");
+      }
+    } catch (error) {
+      console.error("Error Factory delete data", error);
+      toast.error("Error Factory delete data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const columns = [
     {
@@ -113,10 +152,17 @@ const FactoryList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
+            <div className="flex gap-2">
             <div 
             onClick={() => navigate(`/factory-edit/${id}`)}
             className="flex items-center space-x-2">
               <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            </div>
+            <div 
+            onClick={(e) => handleDelete(e,id)}
+            className="flex items-center space-x-2">
+              <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            </div>
             </div>
           );
         },

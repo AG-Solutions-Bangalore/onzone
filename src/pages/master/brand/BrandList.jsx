@@ -8,6 +8,9 @@ import { CiEdit } from "react-icons/ci";
 import MUIDataTable from "mui-datatables";
 import MasterFilter from "../../../components/MasterFilter";
 import { motion } from "framer-motion";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const BrandList = () => {
   const [brandData, setBrandData] = useState(null);
@@ -39,6 +42,40 @@ const BrandList = () => {
     };
     fetchBrandData();
   }, [isPanelUp, navigate]);
+
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
+      }
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await axios({
+        url: BASE_URL + "/api/delete-brand/" + id, 
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code == "200") {
+        toast.success("Brand Deleted  succesfully")
+        setBrandData((prevUserListData) => 
+          prevUserListData.filter((user) => user.id !== id && user.fabric_brand_status === user.fabric_brand_status)
+        );
+       
+      } else {
+        toast.error("Errro occur while delete the Brand ");
+      }
+    } catch (error) {
+      console.error("Error Brand delete data", error);
+      toast.error("Error Brand delete data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const columns = [
     {
@@ -103,14 +140,25 @@ const BrandList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
+            <div className="flex gap-2">
             <motion.div
               onClick={() => navigate(`/branch-edit/${id}`)}
               className="flex items-center space-x-2"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+              <CiEdit title="Edit" className="h-5 w-5 cursor-pointer hover:text-blue-500" />
+             
             </motion.div>
+            <motion.div
+              onClick={(e) => handleDelete(e,id)}
+              className="flex items-center space-x-2"
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            </motion.div>
+            </div>
           );
         },
       },

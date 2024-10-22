@@ -8,6 +8,9 @@ import BASE_URL from "../../../base/BaseUrl";
 import axios from "axios";
 import { CiEdit } from "react-icons/ci";
 import MasterFilter from "../../../components/MasterFilter";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const WidthList = () => {
   const [widthData, setWidthData] = useState(null);
@@ -40,6 +43,41 @@ const WidthList = () => {
     fetchWidthData();
     setLoading(false);
   }, []);
+
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
+      }
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await axios({
+        url: BASE_URL + "/api/delete-width/" + id, 
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code == "200") {
+        toast.success("Width Deleted  succesfully")
+        setWidthData((prevUserListData) => 
+          prevUserListData.filter((user) => user.id !== id && user.width_status === user.width_status)
+        );
+       
+      } else {
+        toast.error("Error occur while delete the Width ");
+      }
+    } catch (error) {
+      console.error("Error Width delete data", error);
+      toast.error("Error Width delete data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const columns = [
     {
@@ -78,10 +116,17 @@ const WidthList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
+            <div className="flex gap-2">
             <div 
             onClick={() => navigate(`/width-edit/${id}`)}
             className="flex items-center space-x-2">
               <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            </div>
+            <div 
+            onClick={(e) => handleDelete(e,id)}
+            className="flex items-center space-x-2">
+                  <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            </div>
             </div>
           );
         },

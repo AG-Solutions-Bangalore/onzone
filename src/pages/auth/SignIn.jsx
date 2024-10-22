@@ -12,9 +12,9 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
-  const emailInputRef = useRef(null);  // Add this line
+  const emailInputRef = useRef(null);  
   
-  // Add this useEffect hook
+  
   useEffect(() => {
     if (emailInputRef.current) {
       emailInputRef.current.focus();

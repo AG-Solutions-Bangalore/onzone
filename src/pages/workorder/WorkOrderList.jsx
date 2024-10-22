@@ -11,6 +11,8 @@ import { IoDownloadOutline, IoEyeOutline } from 'react-icons/io5';
 import { IoIosArrowDropright } from 'react-icons/io';
 import Moment from "moment";
 import { Button, IconButton } from '@mui/material';
+import { MdDeleteOutline } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 const WorkOrderList = () => {
     const [workOrderData, setWorkOrderData] = useState(null);
@@ -68,6 +70,40 @@ const WorkOrderList = () => {
         
         
       })
+    };
+
+
+    const handleDelete = async (e, id) => {
+      e.preventDefault();
+      try {
+        if (!isPanelUp) {
+          navigate("/maintenance");
+          return;
+        }
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        const res = await axios({
+          url: BASE_URL + "/api/delete-half-work-order/" + id, 
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.data.code == "200") {
+          toast.success("Work Order Deleted Succesfully")
+          setWorkOrderData((prevUserListData) => 
+            prevUserListData.filter((user) => user.id !== id && user.work_order_status === user.work_order_status)
+          );
+         
+        } else {
+          toast.error("Errro occur while delete the Work Order ");
+        }
+      } catch (error) {
+        console.error("Error Work Order delete data", error);
+        toast.error("Error Work Order delete data");
+      } finally {
+        setLoading(false);
+      }
     };
   
     const columns = [
@@ -170,6 +206,7 @@ const WorkOrderList = () => {
                 className="h-5 w-5 cursor-pointer "
               />
             )}
+             <MdDeleteOutline onClick={(e) => handleDelete(e,id)} title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
               </div>
             );
           },

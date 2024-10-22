@@ -8,6 +8,8 @@ import BASE_URL from "../../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
 import { CiEdit } from "react-icons/ci";
 import AttributeFilter from "../../../components/AttributeFilter";
+import { MdDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const HalfRatioList = () => {
   const [halfRatioData, setHalfRatioData] = useState(null);
@@ -43,6 +45,41 @@ const HalfRatioList = () => {
     fetchHalfRatioData();
     setLoading(false);
   }, []);
+
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
+      }
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await axios({
+        url: BASE_URL + "/api/delete-half-ratio/" + id, 
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code == "200") {
+        toast.success("H-Ratio Deleted  succesfully")
+        setHalfRatioData((prevUserListData) => 
+          prevUserListData.filter((user) => user.id !== id && user.ratio_status === user.ratio_status)
+        );
+       
+      } else {
+        toast.error("Errro occur while delete the H-Ratio ");
+      }
+    } catch (error) {
+      console.error("Error H-Ratio delete data", error);
+      toast.error("Error H-Ratio delete data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const columns = [
     {
@@ -98,10 +135,17 @@ const HalfRatioList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
+            <div className="flex gap-2">
             <div 
             onClick={() => navigate(`/halfRatio-edit/${id}`)}
             className="flex items-center space-x-2">
               <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            </div>
+            <div 
+            onClick={(e) => handleDelete(e,id)}
+            className="flex items-center space-x-2">
+            <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            </div>
             </div>
           );
         },

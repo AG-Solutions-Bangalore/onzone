@@ -9,6 +9,9 @@ import MUIDataTable from "mui-datatables";
 import AddStyle from "./AddStyle";
 import { CiEdit } from "react-icons/ci";
 import MasterFilter from "../../../components/MasterFilter";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdDeleteOutline } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const StyleList = () => {
   const [styleData, setStyleData] = useState(null);
@@ -42,6 +45,39 @@ const StyleList = () => {
   useEffect(() => {
     fetchStyleData();
   }, []);
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (!isPanelUp) {
+        navigate("/maintenance");
+        return;
+      }
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await axios({
+        url: BASE_URL + "/api/delete-style/" + id, 
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.data.code == "200") {
+        toast.success("Style Deleted  succesfully")
+        setStyleData((prevUserListData) => 
+          prevUserListData.filter((user) => user.id !== id && user.style_status === user.style_status)
+        );
+       
+      } else {
+        toast.error("Errro occur while delete the Style ");
+      }
+    } catch (error) {
+      console.error("Error Style delete data", error);
+      toast.error("Error Style delete data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const columns = [
     {
@@ -80,16 +116,25 @@ const StyleList = () => {
         sort: false,
         customBodyRender: (id) => {
           return (
+            <div className="flex gap-2">
             <div 
             onClick={() => navigate(`/style-edit/${id}`)}
             className="flex items-center space-x-2">
               <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
+            </div>
+            <div 
+             onClick={(e) => handleDelete(e,id)}
+            className="flex items-center space-x-2">
+            <MdDeleteOutline title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+            </div>
             </div>
           );
         },
       },
     },
   ];
+
+ 
   const options = {
     selectableRows: "none",
     elevation: 0,
