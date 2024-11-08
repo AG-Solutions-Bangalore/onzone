@@ -206,6 +206,7 @@ const WorkOrder = () => {
                   <table   className="w-full" style={{ marginBottom: '0.2rem' }}>
                     <tbody>
                       <tr  >
+                        <td className=' text-sm' >Work O.No&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_no}</span></td>
                         <td className=' text-sm' >Factory&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_factory}</span></td>
                       
                         <td className='text-sm'>Brands&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_brand}</span></td>

@@ -141,7 +141,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
           
         </ul>
       </div>
-      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.0.5</div>
+      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.0.6</div>
     </aside>
    
   );
