@@ -15,7 +15,6 @@ const StyleList = lazy(() => import("./pages/master/style/StyleList"));
 const FactoryList = lazy(() => import("./pages/master/factory/FactoryList"));
 const WidthList = lazy(() => import("./pages/master/width/WidthList"));
 const HalfRatioList = lazy(() => import("./pages/attribute/halfRatio/HalfRatioList"));
-const AddBrand = lazy(() => import("./pages/master/brand/AddBrand"));
 const AddStyle = lazy(() => import("./pages/master/style/AddStyle"));
 const AddFactory = lazy(() => import("./pages/master/factory/AddFactory"));
 const AddWidth = lazy(() => import("./pages/master/width/AddWidth"));
@@ -82,7 +81,6 @@ const App = () => {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/maintenance" element={<Maintenance />} />
         <Route path="/brand" element={<BrandList />} />
-        <Route path="/add-brand" element={<AddBrand />} />
         <Route path="/branch-edit/:id" element={<EditBrand />} />
         <Route path="/style" element={<StyleList />} />
         <Route path="/add-style" element={<AddStyle />} />

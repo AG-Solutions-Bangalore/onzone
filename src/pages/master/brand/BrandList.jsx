@@ -183,16 +183,7 @@ const BrandList = () => {
     viewColumns: true,
     download: false,
     print: false,
-    customToolbar: () => {
-      return (
-        <Link
-          to="/add-brand"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          + Brand
-        </Link>
-      );
-    },
+    
   };
 
   return (

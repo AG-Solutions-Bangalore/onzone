@@ -51,7 +51,6 @@ const AppProvider = ({ children }) => {
         "/add-width",
         "/half-ratio",
         "/add-halfratio",
-        "/add-brand",
         "/branch-edit",
         "/style-edit",
         "/factory-edit",
