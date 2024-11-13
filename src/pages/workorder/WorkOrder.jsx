@@ -209,7 +209,7 @@ const WorkOrder = () => {
                         <td className=' text-sm' >Work O.No&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_no}</span></td>
                         <td className=' text-sm' >Factory&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_factory}</span></td>
                       
-                        <td className='text-sm'>Brands&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_brand}</span></td>
+                        <td className='text-sm'>Brands&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_brand == 'Other' ? workorder.work_order_brand_other : workorder.work_order_brand }</span></td>
                         <td className='text-sm'>Ratio&nbsp;:&nbsp;<span className='font-bold'>{workorder.work_order_ratio}</span></td>
                   
                         

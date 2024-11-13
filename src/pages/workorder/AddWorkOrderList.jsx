@@ -22,6 +22,7 @@ const AddWorkOrderList = () => {
     work_order_year: dateyear,
     work_order_factory_no: "",
     work_order_brand: "",
+    work_order_brand_other:"",
     work_order_style_type: "Chinese Collar",
     work_order_width: "",
     work_order_count: "",
@@ -418,6 +419,7 @@ const AddWorkOrderList = () => {
       work_order_year: dateyear,
       work_order_factory_no: workorder.work_order_factory_no,
       work_order_brand: workorder.work_order_brand,
+      work_order_brand_other:workorder.work_order_brand_other,
       work_order_style_type: workorder.work_order_style_type,
       work_order_width: workorder.work_order_width,
       workorder_sub_data: users,
@@ -493,7 +495,7 @@ const AddWorkOrderList = () => {
                 </Select>
               </FormControl>
             </div>
-
+                  {/* brand  */}
             <div>
               <FormControl fullWidth>
                 <InputLabel id="service-select-label">
@@ -522,6 +524,33 @@ const AddWorkOrderList = () => {
                 </Select>
               </FormControl>
             </div>
+            {(workorder.work_order_brand == 'Other') && (
+               <div>
+               <Input
+                 label="Other Brand"
+                 type="text"
+                 required
+                 name="work_order_brand_other"
+                 value={workorder.work_order_brand_other}
+                 onChange={(e) => onInputChange(e)}
+                 className="w-full px-4 py-3 border border-gray-400 rounded-md  transition-all"
+               />
+             </div>
+
+            )}
+            <div>
+              <Input
+                label="Half Consumption"
+                type="tel"
+                required
+                name="work_order_ratio_h_consumption"
+                value={workorder.work_order_ratio_h_consumption}
+                onChange={(e) => onInputChange(e)}
+                className="w-full px-4 py-3 border border-gray-400 rounded-md  transition-all"
+              />
+            </div>
+
+            {/* till here brand  */}
 
             <div hidden>
               <FormControl fullWidth>
