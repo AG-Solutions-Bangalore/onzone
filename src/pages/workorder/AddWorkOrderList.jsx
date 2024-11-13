@@ -13,11 +13,11 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
-import dateyear from "../../utils/DateYear";
 import { ContextPanel } from "../../utils/ContextPanel";
 import { Delete } from "@mui/icons-material";
 const AddWorkOrderList = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [dateyear,setDateyear] = useState({})
   const [workorder, setWorkOrder] = useState({
     work_order_year: dateyear,
     work_order_factory_no: "",
@@ -48,7 +48,7 @@ const AddWorkOrderList = () => {
     work_order_sub_b: "",
     work_order_sub_c: "",
     work_order_sub_length: "",
-    work_order_sub_new_length:"",
+    work_order_sub_new_length: "",
     work_order_sub_half_shirt: "",
     work_order_sub_full_shirt: "",
     work_order_sub_amount: "",
@@ -63,6 +63,40 @@ const AddWorkOrderList = () => {
   const [brand, setBrand] = useState([]);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
+
+  const fetchBrandData = () =>
+    fetchData(`${BASE_URL}/api/fetch-brand`, (data) => setBrand(data.brand));
+  const fetchWidthData = () =>
+    fetchData(`${BASE_URL}/api/fetch-width`, (data) => setWidth(data.width));
+  const fetchStyleData = () =>
+    fetchData(`${BASE_URL}/api/fetch-style`, (data) => setStyle(data.style));
+  const fetchRatioData = () =>
+    fetchData(`${BASE_URL}/api/fetch-ratio`, (data) => setRatio(data.ratio));
+  const fetchHalfRatioData = () =>
+    fetchData(`${BASE_URL}/api/fetch-half-ratio`, (data) =>
+      setHalfRatio(data.half_ratio)
+    );
+  const fetchFactoryData = () =>
+    fetchData(`${BASE_URL}/api/fetch-factory`, (data) =>
+      setFactory(data.factory)
+    );
+  const fetchDateData = () =>
+    fetchData(`${BASE_URL}/api/fetch-year`, (data) =>
+      setDateyear(data.year?.current_year)
+  
+    );
+   
+
+  useEffect(() => {
+    fetchDateData()
+    fetchBrandData();
+    fetchWidthData();
+    fetchStyleData();
+    fetchRatioData();
+    fetchHalfRatioData();
+    fetchFactoryData();
+  }, []);
+ 
 
   const addItem = () => {
     const tempUsers = [...users];
@@ -368,81 +402,66 @@ const AddWorkOrderList = () => {
     }
   };
 
-  const fetchBrandData = () =>
-    fetchData(`${BASE_URL}/api/fetch-brand`, (data) => setBrand(data.brand));
-  const fetchWidthData = () =>
-    fetchData(`${BASE_URL}/api/fetch-width`, (data) => setWidth(data.width));
-  const fetchStyleData = () =>
-    fetchData(`${BASE_URL}/api/fetch-style`, (data) => setStyle(data.style));
-  const fetchRatioData = () =>
-    fetchData(`${BASE_URL}/api/fetch-ratio`, (data) => setRatio(data.ratio));
-  const fetchHalfRatioData = () =>
-    fetchData(`${BASE_URL}/api/fetch-half-ratio`, (data) =>
-      setHalfRatio(data.half_ratio)
-    );
-  const fetchFactoryData = () =>
-    fetchData(`${BASE_URL}/api/fetch-factory`, (data) =>
-      setFactory(data.factory)
-    );
+  
 
-  useEffect(() => {
-    fetchBrandData();
-    fetchWidthData();
-    fetchStyleData();
-    fetchRatioData();
-    fetchHalfRatioData();
-    fetchFactoryData();
-  }, []);
-
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const form = document.getElementById("addIndiv");
+    if (!form.checkValidity()) {
+      toast.error("Fill all required");
+      return;
+    }
+
+    
     setIsButtonDisabled(true);
     const data = {
       work_order_year: dateyear,
       work_order_factory_no: workorder.work_order_factory_no,
-      work_order_brand: workorder.work_order_brand ,
+      work_order_brand: workorder.work_order_brand,
       work_order_style_type: workorder.work_order_style_type,
       work_order_width: workorder.work_order_width,
       workorder_sub_data: users,
-      work_order_count:work_order_count,
-      work_order_remarks:workorder.work_order_remarks,
+      work_order_count: work_order_count,
+      work_order_remarks: workorder.work_order_remarks,
       work_order_ratio: workorder.work_order_ratio,
       work_order_ratio_consumption: workorder.work_order_ratio_consumption,
       work_order_ratio_h: workorder.work_order_ratio_h,
       work_order_ratio_h_consumption: workorder.work_order_ratio_h_consumption,
-  };
-  const form = document.getElementById("addIndiv");
-  if(!form.checkValidity()){
-    toast.error("Fill all required")
-    return
-  }
+    };
+   
 
-    axios({
-      url: BASE_URL + "/api/create-work-order-new",
-      method: "POST",
-      data,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    }).then((res) => {
-      if (res.data.code == "200") {
-        toast.success("Style Create succesfull");
+    try {
+      const res = await axios({
+        url: BASE_URL + "/api/create-work-order-new",
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+  
+      if (res?.data?.code == "200") {
+        toast.success("Style Create successful");
         setStyle({
           style_type: "",
         });
         navigate("/work-order");
       } else {
-        toast.error("duplicate entry");
+        toast.error("Duplicate entry");
       }
-    });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Submission failed. Please try again.");
+    } finally {
+      setIsButtonDisabled(false);
+    }
   };
 
   return (
     <Layout>
-      
       <h3 className="text-center md:text-left  text-lg md:text-xl font-bold">
         Create Work Order
-        </h3>
+      </h3>
       <div className="w-full p-4 mt-2 bg-white shadow-lg rounded-xl">
         <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-4">
@@ -573,7 +592,9 @@ const AddWorkOrderList = () => {
                   id="service-select"
                   name="work_order_ratio_h"
                   value={workorder.work_order_ratio_h}
-                  onChange={(e) => {onInputChange(e), setRatioValue(e.target.value)}}
+                  onChange={(e) => {
+                    onInputChange(e), setRatioValue(e.target.value);
+                  }}
                   label="Half Ratio *"
                   required
                 >
@@ -655,333 +676,326 @@ const AddWorkOrderList = () => {
           <div className="flex   flex-col">
             {users.map((user, index) => (
               <>
-              <div key={index} className="mb-2">
-                {/* First Row */}
-                <div className="flex flex-wrap justify-start gap-[3px] mb-2">
-                  
-                  {/* T Code */}
-                  <div className="w-1/2 lg:w-1/12">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="T Code"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_selection_id"
-                        value={user.work_order_sub_selection_id}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                <div key={index} className="mb-2">
+                  {/* First Row */}
+                  <div className="flex flex-wrap justify-start gap-[3px] mb-2">
+                    {/* T Code */}
+                    <div className="w-1/2 lg:w-1/12">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="T Code"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_selection_id"
+                          value={user.work_order_sub_selection_id}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* MRP */}
-                  <div className="w-1/2 lg:w-[80px] ">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="MRP"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_amount"
-                        value={user.work_order_sub_amount}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* MRP */}
+                    <div className="w-1/2 lg:w-[80px] ">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="MRP"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_amount"
+                          value={user.work_order_sub_amount}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Length */}
-                  <div className="w-1/2 lg:w-[88px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="Length"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_length"
-                        value={user.work_order_sub_length}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Length */}
+                    <div className="w-1/2 lg:w-[88px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="Length"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_length"
+                          value={user.work_order_sub_length}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* sublength  */}
-                  <div className="w-1/2 lg:w-[88px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="S-Length"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_new_length"
-                        value={user.work_order_sub_new_length}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* sublength  */}
+                    <div className="w-1/2 lg:w-[88px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="S-Length"
+                        
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_new_length"
+                          value={user.work_order_sub_new_length}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* A */}
-                  <div className="w-1/2 lg:w-[48px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="A"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_a"
-                        value={user.work_order_sub_a}
-                        onChange={(e) => {
-                          onChange(e, index);
-                          HalfA1(index);
-                        }}
-                      />
+                    {/* A */}
+                    <div className="w-1/2 lg:w-[48px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="A"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_a"
+                          value={user.work_order_sub_a}
+                          onChange={(e) => {
+                            onChange(e, index);
+                            HalfA1(index);
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* B */}
-                  <div className="w-1/2 lg:w-[48px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        label="B"
-                        name="work_order_sub_b"
-                        value={user.work_order_sub_b}
-                        onChange={(e) => {
-                          onChange(e, index);
-                          HalfB1(index);
-                        }}
-                      />
+                    {/* B */}
+                    <div className="w-1/2 lg:w-[48px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          label="B"
+                          name="work_order_sub_b"
+                          value={user.work_order_sub_b}
+                          onChange={(e) => {
+                            onChange(e, index);
+                            HalfB1(index);
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* C */}
-                  <div className="w-1/2 lg:w-[48px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        label="C"
-                        name="work_order_sub_c"
-                        value={user.work_order_sub_c}
-                        onChange={(e) => {
-                          onChange(e, index);
-                          HalfC1(index);
-                        }}
-                      />
+                    {/* C */}
+                    <div className="w-1/2 lg:w-[48px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          label="C"
+                          name="work_order_sub_c"
+                          value={user.work_order_sub_c}
+                          onChange={(e) => {
+                            onChange(e, index);
+                            HalfC1(index);
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 38 */}
-                  <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-38"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_38_h"
-                        value={user.work_order_sub_38_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 38 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-38"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_38_h"
+                          value={user.work_order_sub_38_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 40 */}
-                  <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-40"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_40_h"
-                        value={user.work_order_sub_40_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 40 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-40"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_40_h"
+                          value={user.work_order_sub_40_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 42 */}
-                  <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-42"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_42_h"
-                        value={user.work_order_sub_42_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 42 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-42"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_42_h"
+                          value={user.work_order_sub_42_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 44 */}
-                  <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-44"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_44_h"
-                        value={user.work_order_sub_44_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 44 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-44"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_44_h"
+                          value={user.work_order_sub_44_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 46 */}
-                  <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-46"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_46_h"
-                        value={user.work_order_sub_46_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 46 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-46"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_46_h"
+                          value={user.work_order_sub_46_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                   {/* Half 48 */}
-                   <div className="w-1/2 lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-48"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_48_h"
-                        value={user.work_order_sub_48_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 48 */}
+                    <div className="w-1/2 lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-48"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_48_h"
+                          value={user.work_order_sub_48_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half 50 */}
-                  <div className="w-1/2  lg:w-[58px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-50"
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        required
-                        name="work_order_sub_50_h"
-                        value={user.work_order_sub_50_h}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half 50 */}
+                    <div className="w-1/2  lg:w-[58px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-50"
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          required
+                          name="work_order_sub_50_h"
+                          value={user.work_order_sub_50_h}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Half Shirt */}
-                  <div className="w-1/2 lg:w-[90px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="H-Shirt"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_half_shirt"
-                        value={user.work_order_sub_half_shirt}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Half Shirt */}
+                    <div className="w-1/2 lg:w-[90px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="H-Shirt"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_half_shirt"
+                          value={user.work_order_sub_half_shirt}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {/* Full Shirt */}
-                  <div className="w-1/2 lg:w-[90px]">
-                    <div className="form-group">
-                      <TextField
-                        fullWidth
-                        label="F-Shirt"
-                        required
-                        inputProps={{
-                          sx: {
-                            height: "0.35rem",
-                          },
-                        }}
-                        name="work_order_sub_full_shirt"
-                        value={user.work_order_sub_full_shirt}
-                        onChange={(e) => onChange(e, index)}
-                      />
+                    {/* Full Shirt */}
+                    <div className="w-1/2 lg:w-[90px]">
+                      <div className="form-group">
+                        <TextField
+                          fullWidth
+                          label="F-Shirt"
+                          required
+                          inputProps={{
+                            sx: {
+                              height: "0.35rem",
+                            },
+                          }}
+                          name="work_order_sub_full_shirt"
+                          value={user.work_order_sub_full_shirt}
+                          onChange={(e) => onChange(e, index)}
+                        />
+                      </div>
                     </div>
-                  </div>
-            
-                 {/* Delete Button */}
-                 <div className="w-1/2 py-1   lg:w-[25px]">
-                    <IconButton
-                      className="w-6 h-6"
-                      onClick={() => removeUser(index)}
-                    >
-                      <Delete />
-                    </IconButton>
+
+                    {/* Delete Button */}
+                    <div className="w-1/2 py-1   lg:w-[25px]">
+                      <IconButton
+                        className="w-6 h-6"
+                        onClick={() => removeUser(index)}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </div>
                   </div>
                 </div>
-
-                
-                
-              </div>
-              
-            </>
+              </>
             ))}
             <div className="flex justify-start mt-2">
               <Button
                 className="mr-2 mb-2"
                 style={{ width: "100px" }}
-             
                 onClick={(e) => addItem(e)}
               >
                 <span>add</span>
               </Button>
-             
             </div>
           </div>
 
@@ -992,7 +1006,7 @@ const AddWorkOrderList = () => {
             <Button
               type="submit"
               className="mr-2 mb-2"
-              // disabled={isButtonDisabled}
+              disabled={isButtonDisabled}
               // disabled
             >
               <div className="flex gap-1">
