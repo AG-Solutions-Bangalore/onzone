@@ -538,17 +538,7 @@ const AddWorkOrderList = () => {
              </div>
 
             )}
-            <div>
-              <Input
-                label="Half Consumption"
-                type="tel"
-                required
-                name="work_order_ratio_h_consumption"
-                value={workorder.work_order_ratio_h_consumption}
-                onChange={(e) => onInputChange(e)}
-                className="w-full px-4 py-3 border border-gray-400 rounded-md  transition-all"
-              />
-            </div>
+       
 
             {/* till here brand  */}
 
