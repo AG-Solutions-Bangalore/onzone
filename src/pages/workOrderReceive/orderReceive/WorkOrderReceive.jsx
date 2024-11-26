@@ -6,6 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { CiEdit } from 'react-icons/ci';
 import MUIDataTable from 'mui-datatables';
+import axios from 'axios';
+import BASE_URL from '../../../base/BaseUrl';
+import moment from 'moment';
 
 const WorkOrderReceive = () => {
     const [orderReceivedData, setOrderReceivedData] = useState(null);
@@ -66,6 +69,9 @@ const WorkOrderReceive = () => {
         options: {
           filter: true,
           sort: false,
+          customBodyRender: (value) => {
+            return moment(value).format("DD-MM-YYYY");
+          },
         },
       },
       {
@@ -103,19 +109,17 @@ const WorkOrderReceive = () => {
             return (
               <div className="flex gap-2">
               <div 
-             
+              onClick={()=>navigate(`/edit-order-received/${id}`)}
               className="flex items-center space-x-2">
                 <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
               </div>
-              {userType == "2" ? (
+            
               <div 
-             
+              onClick={()=>navigate(`/view-order-received/${id}`)}
               className="flex items-center space-x-2">
-                <FaEye title="Delete" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+                <FaEye title="view" className="h-5 w-5 cursor-pointer hover:text-red-500" />
               </div>
-               ) : (
-                ""
-              )}
+               
               </div>
             );
           },
@@ -132,17 +136,19 @@ const WorkOrderReceive = () => {
         viewColumns: true,
         download: false,
         print: false,
+    
         customToolbar: () => {
           return (
             <Link
             to="/add-order-received"
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
           >
-            + Work Order Receive
+            + Order Receive
           </Link>
            
           );
         },
+        
       };
   return (
     <Layout>

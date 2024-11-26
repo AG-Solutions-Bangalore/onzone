@@ -48,6 +48,14 @@ import AddOrderReceived from "./pages/workOrderReceive/orderReceive/AddOrderRece
 import WorkOrderSalesList from "./pages/workOrderReceive/orderSales/WorkOrderSalesList";
 import WorkOrderFinalStockList from "./pages/workOrderReceive/orderFinalStock/WorkOrderFinalStockList";
 import AddWorkOrderSales from "./pages/workOrderReceive/orderSales/AddWorkOrderSales";
+import EditOrderReceived from "./pages/workOrderReceive/orderReceive/EditOrderReceived";
+import EditOrderSales from "./pages/workOrderReceive/orderSales/EditOrderSales";
+import ViewOrderReceive from "./pages/workOrderReceive/orderReceive/ViewOrderReceive";
+import ViewOrderSales from "./pages/workOrderReceive/orderSales/ViewOrderSales";
+import RetailerList from "./pages/master/retailer/RetailerList";
+import AddRetailer from "./pages/master/retailer/AddRetailer";
+import EditRetailer from "./pages/master/retailer/EditRetailer";
+import WorkOrderStock from "./pages/workorder/workOrderStock/WorkOrderStock";
 // import Profile from "./pages/profile/Profile";
 // import ChangePassword from "./pages/profile/ChangePassword";
 // import BrandList from "./pages/master/brand/BrandList";
@@ -96,6 +104,10 @@ const App = () => {
         <Route path="/width" element={<WidthList />} />
         <Route path="/add-width" element={<AddWidth />} />
         <Route path="/width-edit/:id" element={<EditWidth />} />
+        {/* retailer  */}
+        <Route path="/retailer" element={<RetailerList />} />
+        <Route path="/add-retailer" element={<AddRetailer />} />
+        <Route path="/retailer-edit/:id" element={<EditRetailer />} />
         <Route path="/ratio" element={<RatioList />} />
         <Route path="/half-ratio" element={<HalfRatioList />} />
         <Route path="/add-halfratio" element={<AddHalfRatio />} />
@@ -110,9 +122,15 @@ const App = () => {
         {/* work order receive  */}
         <Route path="/work-order-receive" element={<WorkOrderReceive />} />
         <Route path="/add-order-received" element={<AddOrderReceived />} />
+        <Route path="/edit-order-received/:id" element={<EditOrderReceived />} />
+        <Route path="/view-order-received/:id" element={<ViewOrderReceive />} />
         <Route path="/work-order-sales" element={<WorkOrderSalesList />} />
         <Route path="/add-order-sales" element={<AddWorkOrderSales />} />
+        <Route path="/edit-order-sales/:id" element={<EditOrderSales />} />
+        <Route path="/view-order-sales/:id" element={<ViewOrderSales />} />
         <Route path="/work-order-final-stock" element={<WorkOrderFinalStockList />} />
+        <Route path="/work-order-stock" element={<WorkOrderStock />} />
+
         <Route
           path="/profile"
           element={<Profile />}

@@ -56,6 +56,9 @@ const AppProvider = ({ children }) => {
         "/factory-edit",
         "/change-password",
         "/width-edit",
+        "/retailer",
+        "/add-retailer",
+        "/retailer-edit",
         "/halfRatio-edit",
         "/work-order",
         "/add-work-order",
@@ -66,8 +69,12 @@ const AppProvider = ({ children }) => {
         "/view-ratio-list",
         "/work-order-receive",
         "/add-order-received",
+        "/edit-order-received",
+        "/view-order-received",
         "/work-order-sales",
         "/add-order-sales",
+        "/edit-order-sales",
+        "/view-order-sales",
         "/work-order-final-stock"
         ];
         const isAllowedPath = allowedPaths.some((path) =>

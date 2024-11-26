@@ -177,7 +177,6 @@ const HalfRatioList = () => {
   };
   return (
     <Layout>
-       <AttributeFilter/>
       
       <div className="mt-2">
         <MUIDataTable

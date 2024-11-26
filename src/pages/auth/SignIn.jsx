@@ -44,7 +44,14 @@ const SignIn = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("username", username);
           localStorage.setItem("user-type", userType);
-          navigate("/brand");
+          
+          if (userType == 1 || userType == 2) {
+            navigate("/brand");
+          } else if (userType == 4) {
+            navigate("/work-order");
+          } else {
+            toast.error("Unauthorized user type.");
+          }
         } else {
           toast.error("Login Failed, Token not received.");
         }

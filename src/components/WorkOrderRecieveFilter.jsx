@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ContextPanel } from '../utils/ContextPanel';
 
 const WorkOrderRecieveFilter = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {userType} = useContext(ContextPanel)
   
-    const buttons = [
+    const allButtons = [
         {
           label: "Work Order Received",
           path: "/work-order-receive",
           color: "from-pink-500 to-orange-400",
         },
-      
         {
           label: "Work Order Sales",
           path: "/work-order-sales",
@@ -24,6 +25,13 @@ const WorkOrderRecieveFilter = () => {
         },
      
       ];
+
+      const buttons = userType == 4 
+    ? []  // Only show Work Order Received for userType 4
+    : (userType == 1 || userType == 2)
+      ? allButtons     // Show all buttons for userType 1 or 2
+      : [];            // Show no buttons for other user types
+
   
     const handleButtonClick = (path) => {
       navigate(path);

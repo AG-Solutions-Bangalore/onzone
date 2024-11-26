@@ -17,6 +17,7 @@ const AddFactory = () => {
     factory_gstin: "",
     factory_contact_name: "",
     factory_contact_mobile: "",
+    factory_contact_email:"",
   });
   const validateOnlyDigits = (inputtxt) => {
     var phoneno = /^\d+$/;
@@ -67,6 +68,7 @@ const AddFactory = () => {
       factory_gstin: factory.factory_gstin,
       factory_contact_name: factory.factory_contact_name,
       factory_contact_mobile: factory.factory_contact_mobile,
+      factory_contact_email: factory.factory_contact_email,
     };
 
     axios({
@@ -86,6 +88,7 @@ const AddFactory = () => {
           factory_gstin: "",
           factory_contact_name: "",
           factory_contact_mobile: "",
+          factory_contact_email:"",
         });
         navigate("/factory");
       } else {
@@ -103,13 +106,24 @@ const AddFactory = () => {
       </div>
       <div className="w-full mt-5 p-4 bg-white shadow-lg rounded-xl">
         <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div className="form-group">
               <Input
                 label="Factory Name"
                 type="text"
                 name="factory_name"
                 value={factory.factory_name}
+                onChange={(e) => onInputChange(e)}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-md "
+              />
+            </div>
+            <div className="form-group">
+              <Input
+                label="Email"
+                type="text"
+                name="factory_contact_email"
+                value={factory.factory_contact_email}
                 onChange={(e) => onInputChange(e)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-md "

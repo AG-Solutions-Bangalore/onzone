@@ -138,8 +138,6 @@ const RatioList = () => {
   };
   return (
     <Layout>
-       <AttributeFilter/>
-      
       <div className="mt-2">
         <MUIDataTable
         title='Ratio List'
