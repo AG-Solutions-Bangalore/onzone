@@ -137,6 +137,26 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               )}
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/work-order-receive">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 capitalize"
+                  fullWidth
+                >
+                  <TbReportAnalytics className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Order Receive
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
 
           
         </ul>

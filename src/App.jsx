@@ -43,6 +43,11 @@ import SIgnUp from "./pages/auth/SIgnUp";
 import Maintenance from "./pages/maintenance/Maintenance";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Loader from "./components/Loader";
+import WorkOrderReceive from "./pages/workOrderReceive/orderReceive/WorkOrderReceive";
+import AddOrderReceived from "./pages/workOrderReceive/orderReceive/AddOrderReceived";
+import WorkOrderSalesList from "./pages/workOrderReceive/orderSales/WorkOrderSalesList";
+import WorkOrderFinalStockList from "./pages/workOrderReceive/orderFinalStock/WorkOrderFinalStockList";
+import AddWorkOrderSales from "./pages/workOrderReceive/orderSales/AddWorkOrderSales";
 // import Profile from "./pages/profile/Profile";
 // import ChangePassword from "./pages/profile/ChangePassword";
 // import BrandList from "./pages/master/brand/BrandList";
@@ -102,6 +107,12 @@ const App = () => {
         <Route path="/work-order-edit/:id" element={<EditWorkOrder />} />
         <Route path="/add-ratio" element={<AddRatioList />} />
         <Route path="/view-ratio-list/:id" element={<ViewRatioList />} />
+        {/* work order receive  */}
+        <Route path="/work-order-receive" element={<WorkOrderReceive />} />
+        <Route path="/add-order-received" element={<AddOrderReceived />} />
+        <Route path="/work-order-sales" element={<WorkOrderSalesList />} />
+        <Route path="/add-order-sales" element={<AddWorkOrderSales />} />
+        <Route path="/work-order-final-stock" element={<WorkOrderFinalStockList />} />
         <Route
           path="/profile"
           element={<Profile />}

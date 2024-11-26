@@ -1,3 +1,3 @@
-const BASE_URL = "https://houseofonzone.com/admin/public";
+const BASE_URL = "https://houseofonzone.online/admin/public";
 
 export default BASE_URL;
