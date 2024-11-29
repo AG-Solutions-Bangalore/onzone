@@ -75,7 +75,9 @@ const AppProvider = ({ children }) => {
         "/add-order-sales",
         "/edit-order-sales",
         "/view-order-sales",
-        "/work-order-final-stock"
+        "/work-order-final-stock",
+        "/retailer-report",
+        "/dc-receipt"
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)
@@ -103,7 +105,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     checkPanelStatus();
-    const intervalId = setInterval(checkPanelStatus, 60000);
+    const intervalId = setInterval(checkPanelStatus, 600000);
     return () => clearInterval(intervalId);
   }, []);
 

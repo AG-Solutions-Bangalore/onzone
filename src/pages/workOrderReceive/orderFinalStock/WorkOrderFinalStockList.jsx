@@ -135,8 +135,8 @@ const WorkOrderFinalStockList = () => {
       };
   return (
    <Layout>
-    <WorkOrderRecieveFilter/>
-    <div className="mt-5">
+    {/* <WorkOrderRecieveFilter/> */}
+    <div >
         <MUIDataTable
         title='Work Order Final Stock'
           data={orderReceivedData ? orderReceivedData : []}

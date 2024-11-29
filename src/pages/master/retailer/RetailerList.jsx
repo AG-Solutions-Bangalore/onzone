@@ -137,7 +137,7 @@ const RetailerList = () => {
   };
   return (
     <Layout>
-   
+    <MasterFilter/>
    <div className="mt-5">
      <MUIDataTable
      title='Retailer List'

@@ -10,6 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import AttributeFilter from "../../../components/AttributeFilter";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
+import MasterFilter from "../../../components/MasterFilter";
 
 const HalfRatioList = () => {
   const [halfRatioData, setHalfRatioData] = useState(null);
@@ -177,7 +178,7 @@ const HalfRatioList = () => {
   };
   return (
     <Layout>
-      
+      <MasterFilter/>
       <div className="mt-2">
         <MUIDataTable
         title='Half Ratio List'

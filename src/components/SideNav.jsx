@@ -8,7 +8,7 @@ import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useContext, useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
-import { TbReportAnalytics } from "react-icons/tb";
+import { TbReport, TbReportAnalytics } from "react-icons/tb";
 import { BsShopWindow } from "react-icons/bs";
 import { ContextPanel } from "../utils/ContextPanel";
 import { IoReaderOutline } from "react-icons/io5";
@@ -56,7 +56,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
       ref={sidenavRef}
       className={`${sidenavTypes[sidenavType]} ${
         openSideNav ? "translate-x-0" : "-translate-x-80"
-      } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-[272px] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
+      } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-[255px] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
     >
       <div className={`relative`}>
         <Link to="/brand" className="flex items-center justify-center p-3">
@@ -81,7 +81,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
         </IconButton>
       </div>
       <div className="m-4">
-        <ul className="mb-4 flex flex-col gap-1">
+        <ul className="mb-2 flex flex-col     overflow-y-auto lg:h-[calc(100vh-200px)]    md:h-[calc(100vh-200px)] h-[calc(100vh-200px)] custom-scroll  ">
        
  
 
@@ -94,7 +94,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                 <Button
                   variant={isActive ? "gradient" : "text"}
                   color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
+                  className="flex   items-center gap-4 px-4 p-2 capitalize"
                   fullWidth
                 >
                   <FaRegUser className="w-5 h-5 text-black" />
@@ -108,69 +108,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               )}
             </NavLink>
           </li>
-
-          <li>
-            <NavLink to="/retailer">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <BsShopWindow  className="w-5 h-5 text-black" />
-                  <Typography
-                    color="black"
-                    className="font-medium capitalize"
-                  >
-                    Retailer
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-     
-          <li>
-            <NavLink to="/ratio">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <LuUsers className="w-5 h-5 text-black" />
-                  <Typography
-                    color="black"
-                    className="font-medium capitalize"
-                  >
-                    Full Ratio
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/half-ratio">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <LuUsers className="w-5 h-5 text-black" />
-                  <Typography
-                    color="black"
-                    className="font-medium capitalize"
-                  >
-                   Half Ratio
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          
           </>
           ) : null}
 
@@ -188,7 +125,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                 <Button
                   variant={isActive ? "gradient" : "text"}
                   color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
+                  className="flex  items-center gap-4 px-4 p-2 capitalize"
                   fullWidth
                 >
                   <TbReportAnalytics className="w-5 h-5 text-black" />
@@ -203,30 +140,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
 
-          {userType == 1 || userType == 2 ? (
-            <>
-          <li>
-            <NavLink to="/work-order-stock">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <IoReaderOutline  className="w-5 h-5 text-black" />
-                  <Typography
-                    color="black"
-                    className="font-medium capitalize"
-                  >
-                    Work Order Stock
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          </>
-          ) : null}
+          
 
 
           <li>
@@ -235,7 +149,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                 <Button
                   variant={isActive ? "gradient" : "text"}
                   color="green"
-                  className="flex items-center gap-4 px-4 capitalize"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
                   fullWidth
                 >
                   <RiFolderReceivedLine  className="w-5 h-5 text-black" />
@@ -250,10 +164,80 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
 
+          {userType == 1 || userType == 2 ? (
+            <>
+          <li>
+            <NavLink to="/work-order-sales">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <IoReaderOutline  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Sales
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/work-order-final-stock">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <IoReaderOutline  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Finished Stock
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+          </>
+          ) : null}
+
+              {/* report start  */}
+
+              <hr className="border-b border-dashed mb-1" />
+          <li>
+            <NavLink to="/retailer-report">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <TbReport  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Retailer Report
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+        
+       
           
         </ul>
       </div>
-      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.1.7</div>
+      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.2.7</div>
     </aside>
    
   );

@@ -4,7 +4,8 @@ import WorkOrderRecieveFilter from '../../../components/WorkOrderRecieveFilter'
 import { ContextPanel } from '../../../utils/ContextPanel';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
-import { CiEdit } from 'react-icons/ci';
+import { CiEdit, CiReceipt } from 'react-icons/ci';
+import { PiPackage } from "react-icons/pi";
 import MUIDataTable from 'mui-datatables';
 import axios from 'axios';
 import BASE_URL from '../../../base/BaseUrl';
@@ -117,7 +118,12 @@ const WorkOrderReceive = () => {
               <div 
               onClick={()=>navigate(`/view-order-received/${id}`)}
               className="flex items-center space-x-2">
-                <FaEye title="view" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+                <PiPackage  title="Packing List" className="h-5 w-5 cursor-pointer hover:text-red-500" />
+              </div>
+              <div 
+              onClick={()=>navigate(`/dc-receipt/${id}`)}
+              className="flex items-center space-x-2">
+                <CiReceipt  title="DC Receipt" className="h-5 w-5 cursor-pointer hover:text-red-500" />
               </div>
                
               </div>
@@ -152,8 +158,8 @@ const WorkOrderReceive = () => {
       };
   return (
     <Layout>
-        <WorkOrderRecieveFilter/>
-        <div className="mt-5">
+        {/* <WorkOrderRecieveFilter/> */}
+        <div >
         <MUIDataTable
         title='Work Order Received'
           data={orderReceivedData ? orderReceivedData : []}

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactToPrint from 'react-to-print';
 import Moment from 'moment';
-import { useParams } from 'react-router-dom'
-import WorkOrderRecieveFilter from '../../../components/WorkOrderRecieveFilter'
+import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../layout/Layout'
 import BASE_URL from '../../../base/BaseUrl';
 import Loader from '../../../components/Loader';
@@ -67,6 +66,7 @@ const ViewOrderReceive = () => {
     const [workOrderSub, setWorkOrderSub] = useState([]);
     const [workOrderFooter, setWorkOrderFooter] = useState({});
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate()
   
     const componentRef = useRef(null);
     useEffect(() => {
@@ -114,14 +114,16 @@ const ViewOrderReceive = () => {
     }
   return (
     <Layout>
-          <WorkOrderRecieveFilter/>
+      
        
-        <div  className=" p-2">
+        <div  >
         <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white mt-2 p-2 rounded-lg space-y-4 md:space-y-0">
           <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Work Order Receive View
+          Packing List
           </h3>
-          <div>
+         <div className='flex gap-1'>
+     
+         
           <ReactToPrint
           trigger={() => (
             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -131,12 +133,13 @@ const ViewOrderReceive = () => {
           content={() => componentRef.current}
         />
           </div>
+        
         </div>
     
 
       <div 
         ref={componentRef} 
-        className="bg-white shadow-md rounded-lg p-6"
+        className="bg-white  rounded-lg p-6"
       >
         {/* Main Details Table */}
         <table className="w-full mb-1 border-collapse text-sm">
@@ -172,41 +175,7 @@ const ViewOrderReceive = () => {
   </tbody>
 </table>
 
-        {/* Sub Items Table */}
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-blue-100 text-gray-700">
-              <th className="p-2 border  border-black  text-center">Description</th>
-              <th className="p-2 border border-black  text-center">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workOrderSub.map((item, index) => (
-              <tr key={index} className="border">
-                <td className="p-2 border  border-black ">
-                  {[
-                    item.work_order_sub_color,
-                    item.work_order_sub_design,
-                    item.work_order_sub_type,
-                    item.work_order_sub_color_theme,
-                    item.work_order_sub_occasion
-                  ]
-                    .filter(Boolean)
-                    .join(', ')}
-                </td>
-                <td className="p-2 border  border-black  text-center">
-                  {item.finished_stock_amount}
-                </td>
-              </tr>
-            ))}
-            <tr className="font-bold bg-gray-100">
-              <td className="p-2 border  border-black  text-center">Total</td>
-              <td className="p-2 border  border-black  text-center">
-                {workOrderFooter.total_amount}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+     
       </div>
     </div>
     </Layout>

@@ -27,11 +27,21 @@ const MasterFilter = () => {
           path: "/width",
           color: "from-blue-500 to-green-400",
         },
-        // {
-        //   label: "Retailer",
-        //   path: "/retailer",
-        //   color: "from-teal-500 to-red-400",
-        // },
+        {
+          label: "Retailer",
+          path: "/retailer",
+          color: "from-teal-500 to-red-400",
+        },
+        {
+          label: "Ratio",
+          path: "/ratio",
+          color: "from-red-500 to-purple-400",
+        },
+        {
+          label: "Half Ratio",
+          path: "/half-ratio",
+          color: "from-blue-500 to-green-400",
+        },
       ];
   
     const handleButtonClick = (path) => {

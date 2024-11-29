@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Layout from "../../../layout/Layout";
-import WorkOrderRecieveFilter from "../../../components/WorkOrderRecieveFilter";
 import BASE_URL from "../../../base/BaseUrl";
 
 const work_receive = [
@@ -40,11 +39,16 @@ const EditOrderReceived = () => {
     work_order_rc_pcs: "",
     work_order_rc_fabric_received: "",
     work_order_rc_received_by: "",
+    work_order_rc_fabric_count: "",
     work_order_rc_count: "",
     work_order_rc_remarks: "",
   });
 
-  const useTemplate = { id: "", work_order_rc_sub_barcode: "" ,work_order_rc_sub_box:"" };
+  const useTemplate = {
+    id: "",
+    work_order_rc_sub_barcode: "",
+    work_order_rc_sub_box: "",
+  };
   const [users, setUsers] = useState([useTemplate]);
 
   const validateOnlyDigits = (inputtxt) => {
@@ -111,6 +115,7 @@ const EditOrderReceived = () => {
       work_order_rc_box: workorder.work_order_rc_box,
       work_order_rc_pcs: workorder.work_order_rc_pcs,
       work_order_rc_fabric_received: workorder.work_order_rc_fabric_received,
+      work_order_rc_fabric_count: workorder.work_order_rc_fabric_count,
       work_order_rc_remarks: workorder.work_order_rc_remarks,
       workorder_sub_rc_data: users,
       work_order_rc_count: workorder.work_order_rc_count,
@@ -142,16 +147,15 @@ const EditOrderReceived = () => {
   };
   return (
     <Layout>
-      <WorkOrderRecieveFilter />
-      <div className="p-2">
-        <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white mt-2 p-2 rounded-lg space-y-4 md:space-y-0">
+      <div>
+        <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white  p-2 rounded-lg space-y-4 md:space-y-0">
           <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
             Update Work Order Receive
           </h3>
         </div>
         <div className="bg-white rounded-lg shadow-lg p-6">
           <form onSubmit={onSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Input
                 label="Factory"
                 disabled
@@ -224,14 +228,6 @@ const EditOrderReceived = () => {
                 onChange={onInputChange}
               />
 
-              <Input
-                label="Fabric Received By"
-                name="work_order_rc_received_by"
-                required
-                value={workorder.work_order_rc_received_by}
-                onChange={onInputChange}
-              />
-
               <FormControl fullWidth>
                 <InputLabel id="service-select-label">
                   <span className="text-sm relative bottom-[6px]">
@@ -256,8 +252,37 @@ const EditOrderReceived = () => {
                   ))}
                 </MUISelect>
               </FormControl>
+              {workorder.work_order_rc_fabric_received == "Yes" && (
+                <Input
+                  label="Fabric Received By"
+                  name="work_order_rc_received_by"
+                  value={workorder.work_order_rc_received_by}
+                  onChange={onInputChange}
+                />
+              )}
+              <div
+                className={`w-full  ${
+                  workorder.work_order_rc_fabric_received === "Yes"
+                    ? "col-span-2"
+                    : "col-span-1"
+                } `}
+              >
+                <Input
+                  label="Fabric Left Over"
+                  name="work_order_rc_fabric_count"
+                  required
+                  value={workorder.work_order_rc_fabric_count}
+                  onChange={onInputChange}
+                />
+              </div>
 
-              <div className=" col-span-2">
+              <div
+                className={`w-full  ${
+                  workorder.work_order_rc_fabric_received === "Yes"
+                    ? "col-span-4"
+                    : "col-span-2 "
+                } `}
+              >
                 <Input
                   label="Remarks"
                   name="work_order_rc_remarks"

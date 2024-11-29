@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Layout from "../../../layout/Layout";
-import WorkOrderRecieveFilter from "../../../components/WorkOrderRecieveFilter";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@material-tailwind/react";
 import {
@@ -15,16 +14,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import dateyear from "../../../utils/DateYear";
-import todayBackDate from "../../../utils/TodayBack";
 import todayBack from "../../../utils/TodayBack";
 import { toast } from "react-toastify";
-import ScannerModel from "../../../components/ScannerModel";
-import { Dialog, DialogBody, DialogFooter } from "@material-tailwind/react";
-import { IoIosQrScanner } from "react-icons/io";
-const AddOrderReceived = () => {
-  const inputRefs = useRef([]);
-  const navigate = useNavigate();
+import useBarcodeScanner from "../../../hooks/useBarcodeScanner";
 
+const AddOrderReceived = () => {
+  const navigate = useNavigate();
+  const barcodeRefs = useRef([]);
+  const inputRefs = useRef([]);
   const work_receive = [
     {
       value: "Yes",
@@ -48,6 +45,7 @@ const AddOrderReceived = () => {
     work_order_rc_pcs: "",
     work_order_rc_received_by: "",
     work_order_rc_fabric_received: "",
+    work_order_rc_fabric_count: "",
     work_order_rc_remarks: "",
     work_order_count: "",
   });
@@ -55,8 +53,6 @@ const AddOrderReceived = () => {
   const [brand, setBrand] = useState({
     work_order_brand: "",
   });
-
-  const [showmodal, setShowmodal] = useState(false);
 
   const [users, setUsers] = useState([
     { work_order_rc_sub_barcode: "", work_order_rc_sub_box: "" },
@@ -139,68 +135,50 @@ const AddOrderReceived = () => {
     fetchBrand();
   }, [workorder.work_order_rc_id, fetchBrand]);
 
-  // for barcode scanner
-
-  const closegroupModal = () => {
-    console.log("Closing modal");
-    setShowmodal(false);
-    // window.location.reload();
-  };
-
-  const openmodal = () => {
-    console.log("Opening modal");
-    setShowmodal(true);
-  };
-
-  const barcodeScannerValue = (value) => {
-    console.log("Barcode scanned:", value);
-    setShowmodal(false);
-
+  // Barcode Scanning Setup with the custom hook
+  const handleBarcodeScanned = (symbol, index) => {
     const newUsers = [...users];
-
-    const emptyIndex = newUsers.findIndex(
-      (user) => user.work_order_rc_sub_barcode === ""
-    );
-
-    if (emptyIndex !== -1) {
-      newUsers[emptyIndex].work_order_rc_sub_barcode = value;
-      setUsers(newUsers);
-
-      if (inputRefs.current[emptyIndex]) {
-        const syntheticEvent = {
-          target: {
-            value: value,
-            name: "work_order_rc_sub_barcode",
-          },
-        };
-
-        onChange(syntheticEvent, emptyIndex);
-        CheckBarcode(syntheticEvent, emptyIndex);
-      }
-    } else {
-      const newUserEntry = { work_order_rc_sub_barcode: value };
-      setUsers([...newUsers, newUserEntry]);
-      setCount(work_order_count + 1);
-    }
+    newUsers[index].work_order_rc_sub_barcode = symbol;
+    setUsers(newUsers);
+    console.log("commaseprated", newUsers);
+    CheckBarcode({ target: { value: symbol } }, index);
   };
+
+  useBarcodeScanner(barcodeRefs, handleBarcodeScanned);
 
   const onInputChange = (e) => {
     setWorkorder({
       ...workorder,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "work_order_rc_box") {
+      const boxCount = parseInt(value) || 0;
+
+      if (users.length > boxCount) {
+        const truncatedUsers = users.slice(0, boxCount);
+        setUsers(truncatedUsers);
+        setCount(truncatedUsers.length);
+      }
+    }
   };
 
   const onChange = (e, index) => {
     const newUsers = [...users];
     newUsers[index].work_order_rc_sub_barcode = e.target.value;
     setUsers(newUsers);
+    console.log("onchange", newUsers);
   };
 
   const addItem = (e) => {
     e.preventDefault();
-    setUsers([...users, { work_order_rc_sub_barcode: "" }]);
-    setCount(work_order_count + 1);
+    const boxCount = parseInt(workorder.work_order_rc_box) || 0;
+    if (users.length < boxCount) {
+      setUsers([
+        ...users,
+        { work_order_rc_sub_barcode: "", work_order_rc_sub_box: "" },
+      ]);
+      setCount(work_order_count + 1);
+    }
   };
 
   const removeUser = (index) => {
@@ -223,6 +201,7 @@ const AddOrderReceived = () => {
       work_order_rc_pcs: workorder.work_order_rc_pcs,
       work_order_rc_fabric_received: workorder.work_order_rc_fabric_received,
       work_order_rc_received_by: workorder.work_order_rc_received_by,
+      work_order_rc_fabric_count: workorder.work_order_rc_fabric_count,
       work_order_rc_count: work_order_count,
       work_order_rc_remarks: workorder.work_order_rc_remarks,
       workorder_sub_rc_data: users,
@@ -270,8 +249,12 @@ const AddOrderReceived = () => {
       );
       if (response?.data?.code == "200") {
         if (workorder.work_order_rc_pcs <= work_order_count) {
+          toast.info("Maximum pieces reached");
         } else {
-          setUsers([...users, { work_order_rc_sub_barcode: "" }]);
+          setUsers([
+            ...users,
+            { work_order_rc_sub_barcode: "", work_order_rc_sub_box: "" },
+          ]);
           setCount(work_order_count + 1);
           toast.success("Barcode Found");
           const nextIndex = index + 1;
@@ -288,30 +271,7 @@ const AddOrderReceived = () => {
 
   return (
     <Layout>
-      <WorkOrderRecieveFilter />
-      <div className="p-6">
-        <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white mt-2 p-2 rounded-lg space-y-4 md:space-y-0">
-          <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-            Create Work Order Receive
-          </h3>
-          <div className="flex gap-4 mb-6">
-            <Button
-              onClick={onSubmit}
-              variant="contained"
-              color="primary"
-              disabled={isButtonDisabled}
-              className="px-6 py-2"
-            >
-              Submit
-            </Button>
-            <Link to="/work-order-receive">
-              <Button variant="contained" color="success" className="px-6 py-2">
-                Cancel
-              </Button>
-            </Link>
-          </div>
-        </div>
-
+      <div>
         <div className="bg-white rounded-lg shadow-lg p-6">
           <form id="addIndiv" autoComplete="off" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -410,11 +370,14 @@ const AddOrderReceived = () => {
               <div className="w-full">
                 <Input
                   required
+                  type="number"
                   label="No of Box"
                   name="work_order_rc_box"
                   value={workorder.work_order_rc_box}
                   onChange={onInputChange}
                   className="w-full"
+                  min={0}
+                  step={1}
                 />
               </div>
 
@@ -424,17 +387,6 @@ const AddOrderReceived = () => {
                   label="Total No of Pcs"
                   name="work_order_rc_pcs"
                   value={workorder.work_order_rc_pcs}
-                  onChange={onInputChange}
-                  className="w-full"
-                />
-              </div>
-
-              <div className="w-full">
-                <Input
-                  required
-                  label="Fabric Received By"
-                  name="work_order_rc_received_by"
-                  value={workorder.work_order_rc_received_by}
                   onChange={onInputChange}
                   className="w-full"
                 />
@@ -463,8 +415,42 @@ const AddOrderReceived = () => {
                   ))}
                 </Select>
               </FormControl>
+              {workorder.work_order_rc_fabric_received == "Yes" && (
+                <div className="w-full">
+                  <Input
+                    label="Fabric Received By"
+                    name="work_order_rc_received_by"
+                    value={workorder.work_order_rc_received_by}
+                    onChange={onInputChange}
+                    className="w-full"
+                  />
+                </div>
+              )}
 
-              <div className="col-span-2">
+              <div
+                className={`w-full  ${
+                  workorder.work_order_rc_fabric_received === "Yes"
+                    ? "col-span-2"
+                    : "col-span-1"
+                } `}
+              >
+                <Input
+                  
+                  label="Fabric Leftover"
+                  name="work_order_rc_fabric_count"
+                  value={workorder.work_order_rc_fabric_count}
+                  onChange={onInputChange}
+                  className="w-full"
+                />
+              </div>
+
+              <div
+                className={`col-span-2 ${
+                  workorder.work_order_rc_fabric_received === "Yes"
+                    ? "col-span-4"
+                    : "col-span-2"
+                }`}
+              >
                 <Input
                   label="Remarks"
                   name="work_order_rc_remarks"
@@ -476,30 +462,30 @@ const AddOrderReceived = () => {
             </div>
 
             <hr className="my-2" />
-
+            <p className="text-sm">Total Barcode Count:</p>
             {users.map((user, index) => (
               <div key={index} className="flex gap-4 items-center">
-                <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">
-                  <div>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                  <div className="col-span-1">
                     <Input
                       required
                       label="Box"
                       name="work_order_rc_sub_box"
                       value={user.work_order_rc_sub_box}
-                      onChange={onInputChange}
+                      onChange={(e) => {
+                        const newUsers = [...users];
+                        newUsers[index].work_order_rc_sub_box = e.target.value; // Update the state correctly
+                        setUsers(newUsers); // Update the users state
+                      }}
                     />
                   </div>
 
-                  <div className="flex flex-row ">
-                    <IoIosQrScanner
-                      className="w-10 h-10 "
-                      title="scan"
-                      style={{ cursor: "pointer", marginRight: "1rem" }}
-                      onClick={openmodal}
-                    />
+                  <div className="flex flex-row col-span-3 ">
                     <Input
                       required
-                      inputRef={(ref) => (inputRefs.current[index] = ref)}
+                      inputRef={(ref) => {
+                        inputRefs.current[index] = ref;
+                      }}
                       label="T Code"
                       name="work_order_rc_sub_barcode"
                       value={user.work_order_rc_sub_barcode}
@@ -525,26 +511,33 @@ const AddOrderReceived = () => {
                 color="primary"
                 className="w-36"
                 onClick={addItem}
+                disabled={
+                  !workorder.work_order_rc_box ||
+                  users.length >= (parseInt(workorder.work_order_rc_box) || 0)
+                }
               >
-                Add More
+                + New Box
               </Button>
             </div>
           </form>
+          <div className="flex gap-4 mt-5">
+            <Button
+              onClick={onSubmit}
+              variant="contained"
+              color="primary"
+              disabled={isButtonDisabled}
+              className="px-6 py-2"
+            >
+              Submit
+            </Button>
+            <Link to="/work-order-receive">
+              <Button variant="contained" color="success" className="px-6 py-2">
+                Cancel
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
-      <Dialog open={showmodal} handler={closegroupModal} size="lg">
-        <DialogBody className="h-[60vh] md:h-[75vh] lg:h-[85vh] p-4 flex justify-center">
-          <ScannerModel barcodeScannerValue={barcodeScannerValue} />
-        </DialogBody>
-        <DialogFooter className="flex justify-between">
-          <button
-            onClick={closegroupModal}
-            className="px-4 py-2 bg-red-500 text-white rounded-md cursor-pointer"
-          >
-            Close
-          </button>
-        </DialogFooter>
-      </Dialog>
     </Layout>
   );
 };

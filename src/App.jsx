@@ -56,6 +56,8 @@ import RetailerList from "./pages/master/retailer/RetailerList";
 import AddRetailer from "./pages/master/retailer/AddRetailer";
 import EditRetailer from "./pages/master/retailer/EditRetailer";
 import WorkOrderStock from "./pages/workorder/workOrderStock/WorkOrderStock";
+import RetailerReport from "./pages/reports/retailer/RetailerReport";
+import DcReceiptReceived from "./pages/workOrderReceive/orderReceive/DcReceiptReceived";
 // import Profile from "./pages/profile/Profile";
 // import ChangePassword from "./pages/profile/ChangePassword";
 // import BrandList from "./pages/master/brand/BrandList";
@@ -130,6 +132,9 @@ const App = () => {
         <Route path="/view-order-sales/:id" element={<ViewOrderSales />} />
         <Route path="/work-order-final-stock" element={<WorkOrderFinalStockList />} />
         <Route path="/work-order-stock" element={<WorkOrderStock />} />
+        {/* reports */}
+        <Route path="/retailer-report" element={<RetailerReport />} />
+        <Route path="/dc-receipt/:id" element={<DcReceiptReceived />} />
 
         <Route
           path="/profile"

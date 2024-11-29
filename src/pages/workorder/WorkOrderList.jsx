@@ -125,7 +125,7 @@ const WorkOrderList = () => {
         label: "Work Order No",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
         },
       },
       {
@@ -133,7 +133,7 @@ const WorkOrderList = () => {
         label: "Date",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
           customBodyRender: (value) => {
             return Moment(value).format("DD-MM-YYYY");
           },
@@ -144,7 +144,7 @@ const WorkOrderList = () => {
         label: "Factory",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
         },
       },
       {
@@ -152,7 +152,7 @@ const WorkOrderList = () => {
         label: "Brand",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
         },
       },
       {
@@ -160,17 +160,17 @@ const WorkOrderList = () => {
         label: "Total",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
         },
       },
-      {
-        name: "total_receive",
-        label: "Receive",
-        options: {
-          filter: true,
-          sort: false,
-        },
-      },
+      // {
+      //   name: "total_receive",
+      //   label: "Receive",
+      //   options: {
+      //     filter: true,
+      //     sort: false,
+      //   },
+      // },
       {
         name: "work_order_status",
         label: "Status",
@@ -186,7 +186,7 @@ const WorkOrderList = () => {
           filter: false,
           sort: false,
           customBodyRender: (id,tableMeta) => {
-            const workOrderStatus = tableMeta.rowData[7]
+            const workOrderStatus = tableMeta.rowData[6]
             return (
               <div
                

@@ -161,28 +161,13 @@ const AddWorkOrderSales = () => {
   };
   return (
     <Layout>
-      <WorkOrderRecieveFilter />
-      <div className="p-6">
-        <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white mt-2 p-2 rounded-lg space-y-4 md:space-y-0">
+     
+      <div >
+        <div className="flex mb-4 flex-col md:flex-row justify-between items-center bg-white p-2 rounded-lg space-y-4 md:space-y-0">
           <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
             Create Work Order Sales
           </h3>
-          <div className="flex gap-4 mb-6">
-            <Button
-              onClick={onSubmit}
-              variant="contained"
-              color="primary"
-              disabled={isButtonDisabled}
-              className="px-6 py-2"
-            >
-              Submit
-            </Button>
-            <Link to="/work-order-sales">
-              <Button variant="contained" color="success" className="px-6 py-2">
-                Cancel
-              </Button>
-            </Link>
-          </div>
+          
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6">
@@ -225,6 +210,17 @@ const AddWorkOrderSales = () => {
 
               <div className="w-full">
                 <Input
+                  required
+                  label="Total No of Pcs"
+                  name="work_order_sa_pcs"
+                  value={workorder.work_order_sa_pcs}
+                  onChange={onInputChange}
+                  className="w-full"
+                />
+              </div>
+
+              <div className="w-full">
+                <Input
                   label="DC No"
                   name="work_order_sa_dc_no"
                   value={workorder.work_order_sa_dc_no}
@@ -255,20 +251,11 @@ const AddWorkOrderSales = () => {
                 />
               </div>
 
-              <div className="w-full">
-                <Input
-                  required
-                  label="Total No of Pcs"
-                  name="work_order_sa_pcs"
-                  value={workorder.work_order_sa_pcs}
-                  onChange={onInputChange}
-                  className="w-full"
-                />
-              </div>
+              
 
               <div className="w-full">
                 <Input
-                  required
+                 
                   label="Fabric Sales"
                   name="work_order_sa_fabric_sale"
                   value={workorder.work_order_sa_fabric_sale}
@@ -322,10 +309,26 @@ const AddWorkOrderSales = () => {
                 className="w-36"
                 onClick={addItem}
               >
-                Add More
+                +New Box
               </Button>
             </div>
           </form>
+          <div className="flex gap-4 mt-5">
+            <Button
+              onClick={onSubmit}
+              variant="contained"
+              color="primary"
+              disabled={isButtonDisabled}
+              className="px-6 py-2"
+            >
+              Submit
+            </Button>
+            <Link to="/work-order-sales">
+              <Button variant="contained" color="success" className="px-6 py-2">
+                Cancel
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </Layout>

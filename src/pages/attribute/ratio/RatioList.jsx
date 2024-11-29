@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import AttributeFilter from "../../../components/AttributeFilter";
+import MasterFilter from "../../../components/MasterFilter";
 
 const RatioList = () => {
 
@@ -138,6 +139,7 @@ const RatioList = () => {
   };
   return (
     <Layout>
+      <MasterFilter/>
       <div className="mt-2">
         <MUIDataTable
         title='Ratio List'

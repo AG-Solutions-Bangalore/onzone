@@ -142,7 +142,7 @@ const WorkOrderSalesList = () => {
             to="/add-order-sales"
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-green-700 px-4 py-2 rounded-lg shadow-md"
           >
-            + Order Sales
+            + Sales
           </Link>
            
           );
@@ -150,8 +150,8 @@ const WorkOrderSalesList = () => {
       };
   return (
     <Layout>
-              <WorkOrderRecieveFilter/>
-              <div className="mt-5">
+              {/* <WorkOrderRecieveFilter/> */}
+              <div>
         <MUIDataTable
         title='Work Order Sales List'
           data={orderReceivedData ? orderReceivedData : []}
