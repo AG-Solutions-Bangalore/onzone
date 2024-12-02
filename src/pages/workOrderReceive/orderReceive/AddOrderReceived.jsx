@@ -141,7 +141,7 @@ const AddOrderReceived = () => {
       [e.target.name]: e.target.value,
     });
     if (e.target.name === "work_order_rc_box") {
-      const boxCount = parseInt(value) || 0;
+      const boxCount = parseInt(e.target.value) || 0;
 
       if (users.length > boxCount) {
         const truncatedUsers = users.slice(0, boxCount);
@@ -222,42 +222,52 @@ const AddOrderReceived = () => {
     console.log("Form submitted:", { workorder, users });
   };
 
-  const CheckBarcode = async (e, index) => {
-    const workId = workorder.work_order_rc_id;
-    const barcodeId = e.target.value;
-    if (barcodeId.length === 6) {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${BASE_URL}/api/fetch-work-order-finish-check/${workId}/${barcodeId}`,
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response?.data?.code == "200") {
-        if (workorder.work_order_rc_pcs <= work_order_count) {
-          toast.info("Maximum pieces reached");
-        } else {
-          setUsers([
-            ...users,
-            { work_order_rc_sub_barcode: "", work_order_rc_sub_box: "" },
-          ]);
-          setCount(work_order_count + 1);
+  const CheckBarcode = async (e, index) => {
+    const inputValue = e.target.value;
+  
+    
+    const cleanedInput = inputValue.replace(/,/g, ""); 
+    const formattedInput = cleanedInput.match(/.{1,6}/g)?.join(",") || "";
+    const barcodes = formattedInput.split(","); 
+    const lastBarcode = barcodes[barcodes.length - 1]; 
+  
+    if (lastBarcode.length === 6) {
+      const workId = workorder.work_order_rc_id;
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/api/fetch-work-order-finish-check/${workId}/${lastBarcode}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        if (response?.data?.code == "200") {
           toast.success("Barcode Found");
+          const newUsers = [...users];
+          newUsers[index].work_order_rc_sub_barcode = formattedInput; 
+          setUsers(newUsers);
           const nextIndex = index + 1;
           if (inputRefs.current[nextIndex]) {
             inputRefs.current[nextIndex].focus();
           }
+        } else {
+          toast.error("Barcode Not Found");
         }
-      } else {
-        toast.error("Barcode Not Found");
+      } catch (error) {
+        console.error("Error validating barcode:", error);
+        toast.error("Error validating barcode");
       }
     }
-    console.log("Checking barcode:", e.target.value, "at index:", index);
+    const newUsers = [...users];
+    newUsers[index].work_order_rc_sub_barcode = formattedInput; 
+    setUsers(newUsers);
   };
-
+  
+  
   return (
     <Layout>
       <div>
