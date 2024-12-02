@@ -178,6 +178,11 @@ const AddOrderReceived = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const form = document.getElementById("addIndiv");
+  if (!form.checkValidity()) {
+    toast.error("Please fill out all required fields correctly.");
+    return;
+  }
     const data = {
       work_order_rc_year: dateyear,
       work_order_rc_date: workorder.work_order_rc_date,
@@ -358,6 +363,9 @@ const AddOrderReceived = () => {
                 <Input
                   disabled
                   required
+                  labelProps={{
+                    className:"!text-gray-700"
+                  }}
                   label="Brand"
                   name="work_order_rc_brand"
                   value={brand.work_order_brand || ""}

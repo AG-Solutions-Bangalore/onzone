@@ -110,6 +110,11 @@ const AddWorkOrderSales = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const form = document.getElementById("addIndiv");
+  if (!form.checkValidity()) {
+    toast.error("Please fill out all required fields correctly.");
+    return;
+  }
     const data = {
       work_order_sa_year: dateyear,
       work_order_sa_date: workorder.work_order_sa_date,
@@ -180,7 +185,6 @@ const AddWorkOrderSales = () => {
         toast.error("Barcode Not Found");
       }
     }
-    console.log("Checking barcode:", e.target.value, "at index:", index);
   };
   return (
     <Layout>

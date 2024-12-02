@@ -6,7 +6,6 @@ const ScannerModel = ({ barcodeScannerValue }) => {
     const handleScan = (detectedCodes) => {
       if (detectedCodes && detectedCodes.length > 0) {
         detectedCodes.forEach((code) => {
-          console.log("Scanned Code Raw Value:", code.rawValue);
           barcodeScannerValue(code.rawValue);
         });
       }

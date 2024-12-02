@@ -49,7 +49,6 @@ const RatioList = () => {
   }, []);
 
   const deleteData = async (e, id) => {
-    console.log("delete,i d",id)
     e.preventDefault();
     try {
       if (!isPanelUp) {
@@ -105,7 +104,6 @@ const RatioList = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
-          console.log("ID passed to delete:", id);
           return (
             <div className="flex items-center space-x-2">
               <IoEyeOutline

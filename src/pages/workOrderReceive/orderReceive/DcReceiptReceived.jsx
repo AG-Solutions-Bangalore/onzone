@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 const DcReceiptReceived = () => {
   const { id } = useParams();
-  const statusDc = localStorage.getItem("work_order_rc_status")
+  const statusDc = localStorage.getItem("work_order_rc_status");
   const [workOrder, setWorkOrder] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -77,7 +77,6 @@ const DcReceiptReceived = () => {
       );
       toast.success("Dc Receipt Status Update Successfully");
       navigate("/work-order-receive");
-      
     } catch (error) {
       toast.error("Error updating work order");
     }
@@ -88,35 +87,28 @@ const DcReceiptReceived = () => {
   }
 
   const splitBarcodeData = (data, chunkSize = 9) => {
-    const barcodes = data.split(",").map(b => b.trim());
+    const barcodes = data.split(",").map((b) => b.trim());
     const chunks = [];
-  
+
     for (let i = 0; i < barcodes.length; i += chunkSize) {
       chunks.push(barcodes.slice(i, i + chunkSize).join(", "));
     }
-  
-    return chunks.map((chunk, index) => (
-      <div key={index}>
-        {chunk}
-      </div>
-    ));
+
+    return chunks.map((chunk, index) => <div key={index}>{chunk}</div>);
   };
-  
+
   // Render box content with dynamic box number and piece count
-  const renderBoxContent = (boxNumber, totalPcs, barcodeData) => (
-    <div className=" mb-4 break-inside-avoid">
+  const renderBoxContent = (boxNumber, totalPcs, barcodeData,index) => (
+    <div key={`box-${boxNumber}-${index}`} className=" mb-4 break-inside-avoid">
       {/* Box Details */}
-     
-     
+
       {/* Barcode Section */}
       <div className="border border-black p-1  ">
-      <div className="flex flex-row items-center justify-between border  border-black p-2 mb-2">
-        <span>Box: {boxNumber}</span>
-        <span>Total No of Pcs: {totalPcs}</span>
-      </div>
-       <div className="p-1">
-       {splitBarcodeData(barcodeData)}
-       </div>
+        <div className="flex flex-row items-center justify-between border  border-black p-2 mb-2">
+          <span>Box: {boxNumber}</span>
+          <span>Total No of Pcs: {totalPcs}</span>
+        </div>
+        <div className="p-1">{splitBarcodeData(barcodeData)}</div>
       </div>
     </div>
   );
@@ -126,7 +118,7 @@ const DcReceiptReceived = () => {
     if (!acc[boxNumber]) {
       acc[boxNumber] = {
         barcodes: [],
-        totalPcs: 0
+        totalPcs: 0,
       };
     }
     acc[boxNumber].barcodes.push(item.work_order_rc_sub_barcode);
@@ -136,13 +128,9 @@ const DcReceiptReceived = () => {
 
   // Render box content dynamically
   const renderDynamicBoxContent = () => {
-    return Object.entries(groupedBoxes).map(([boxNumber, boxData]) => (
-      renderBoxContent(
-        boxNumber, 
-        boxData.totalPcs, 
-        boxData.barcodes.join(',')
-      )
-    ));
+    return Object.entries(groupedBoxes).map(([boxNumber, boxData],index) =>
+      renderBoxContent(boxNumber, boxData.totalPcs, boxData.barcodes.join(","),index)
+    );
   };
 
   return (
@@ -153,15 +141,15 @@ const DcReceiptReceived = () => {
             Dc Receipt
           </h3>
           <div className="flex gap-1">
-            {statusDc.toLowerCase() !== 'received' &&(
- <Button 
- onClick={() => openModal(id)}
-    className="flex bg-blue-500 hover:bg-green-400 p-2 items-center space-x-2"
-  >
-    <span>All Received </span>
-  </Button>
+            {statusDc.toLowerCase() !== "received" && (
+              <Button
+                onClick={() => openModal(id)}
+                className="flex bg-blue-500 hover:bg-green-400 p-2 items-center space-x-2"
+              >
+                <span>All Received </span>
+              </Button>
             )}
-         
+
             <ReactToPrint
               trigger={() => (
                 <button className="bg-blue-500 hover:bg-green-500 rounded-lg text-white px-4 py-2  ">
@@ -182,7 +170,9 @@ const DcReceiptReceived = () => {
                 <td className="p-1 w-[16rem] border-r">
                   : {workOrder.work_order_rc_factory}
                 </td>
-                <td className="font-semibold p-1 w-[6rem] text-right border-r">Date</td>
+                <td className="font-semibold p-1 w-[6rem] text-right border-r">
+                  Date
+                </td>
                 <td className="p-1 w-[8rem]">
                   : {moment(workOrder.work_order_rc_date).format("DD-MM-YYYY")}
                 </td>
@@ -192,7 +182,9 @@ const DcReceiptReceived = () => {
                 <td className="p-1 w-[16rem] border-r">
                   : {workOrder.work_order_rc_brand}
                 </td>
-                <td className="font-semibold p-1 w-[6rem] text-right border-r">DC No</td>
+                <td className="font-semibold p-1 w-[6rem] text-right border-r">
+                  DC No
+                </td>
                 <td className="p-1 w-[8rem]">
                   : {workOrder.work_order_rc_dc_no}
                 </td>
@@ -200,11 +192,14 @@ const DcReceiptReceived = () => {
                   DC Date
                 </td>
                 <td className="p-1 w-[8rem]">
-                  : {moment(workOrder.work_order_rc_dc_date).format("DD-MM-YYYY")}
+                  :{" "}
+                  {moment(workOrder.work_order_rc_dc_date).format("DD-MM-YYYY")}
                 </td>
               </tr>
               <tr className="border-l border-r border-black">
-                <td className="font-semibold p-1 w-[8rem] border-r">No of Box</td>
+                <td className="font-semibold p-1 w-[8rem] border-r">
+                  No of Box
+                </td>
                 <td className="p-1 w-[16rem] border-r">
                   : {workOrder.work_order_rc_box}
                 </td>
@@ -222,7 +217,9 @@ const DcReceiptReceived = () => {
                 </td>
               </tr>
               <tr className="border-l border-r border-b border-black">
-                <td className="font-semibold p-1 w-[8rem] border-r">Work Order No</td>
+                <td className="font-semibold p-1 w-[8rem] border-r">
+                  Work Order No
+                </td>
                 <td className="p-1 w-[16rem] border-r">
                   : {workOrder.work_order_rc_id}
                 </td>
@@ -236,28 +233,22 @@ const DcReceiptReceived = () => {
             </tbody>
           </table>
           {/* Render 3 boxes */}
-          <div className="mt-4 space-y-4 ">
-          {renderDynamicBoxContent()}
-          </div>
+          <div className="mt-4 space-y-4 ">{renderDynamicBoxContent()}</div>
         </div>
       </div>
-
 
       <Dialog open={showModal} handler={closeModal}>
         <DialogHeader>Receive all Material From the Factory?</DialogHeader>
         <DialogBody divider>
-          Are you sure you want to close this  <span className="text-red-500">DC Receipt</span> and mark all materials
-          as received?
+          Are you sure you want to close this{" "}
+          <span className="text-red-500">DC Receipt</span> and mark all
+          materials as received?
         </DialogBody>
         <DialogFooter>
           <Button variant="text" color="red" onClick={closeModal}>
             No
           </Button>
-          <Button
-            variant="gradient"
-            color="green"
-            onClick={updateDcReceipt}
-          >
+          <Button variant="gradient" color="green" onClick={updateDcReceipt}>
             Yes
           </Button>
         </DialogFooter>
