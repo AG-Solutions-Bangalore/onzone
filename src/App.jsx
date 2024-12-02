@@ -58,6 +58,12 @@ import EditRetailer from "./pages/master/retailer/EditRetailer";
 import WorkOrderStock from "./pages/workorder/workOrderStock/WorkOrderStock";
 import RetailerReport from "./pages/reports/retailer/RetailerReport";
 import DcReceiptReceived from "./pages/workOrderReceive/orderReceive/DcReceiptReceived";
+import WorkOrderReport from "./pages/reports/workOrderReport/WorkOrderReport";
+import ReceivedReport from "./pages/reports/receivedReport/ReceivedReport";
+import SalesReport from "./pages/reports/sales/SalesReport";
+import ViewWorkOrderReport from "./pages/reports/workOrderReport/ViewWorkOrderReport";
+import ViewReceivedReport from "./pages/reports/receivedReport/ViewReceivedReport";
+import ViewSalesReport from "./pages/reports/sales/ViewSalesReport";
 // import Profile from "./pages/profile/Profile";
 // import ChangePassword from "./pages/profile/ChangePassword";
 // import BrandList from "./pages/master/brand/BrandList";
@@ -135,6 +141,14 @@ const App = () => {
         {/* reports */}
         <Route path="/retailer-report" element={<RetailerReport />} />
         <Route path="/dc-receipt/:id" element={<DcReceiptReceived />} />
+        <Route path="/work-order-report" element={<WorkOrderReport />} />
+        <Route path="/view-work-order-report" element={<ViewWorkOrderReport />} />
+        <Route path="/received-report" element={<ReceivedReport />} />
+        <Route path="/view-received-report" element={<ViewReceivedReport />} />
+        <Route path="/sales-report" element={<SalesReport />} />
+        <Route path="/view-sales-report" element={<ViewSalesReport />} />
+
+
 
         <Route
           path="/profile"

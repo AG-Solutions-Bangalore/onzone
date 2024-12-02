@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../layout/Layout";
 import WorkOrderRecieveFilter from "../../../components/WorkOrderRecieveFilter";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@material-tailwind/react";
 import {
   FormControl,
@@ -16,9 +16,10 @@ import dateyear from "../../../utils/DateYear";
 import todayBack from "../../../utils/TodayBack";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
+import { toast } from "react-toastify";
 const AddWorkOrderSales = () => {
   const inputRefs = useRef([]);
-
+  const navigate = useNavigate()
   const [retailer, setRetailer] = useState([]);
   const [loading, setLoading] = useState(false);
   const [workorder, setWorkorder] = useState({
@@ -45,11 +46,20 @@ const AddWorkOrderSales = () => {
       ...workorder,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "work_order_sa_pcs") {
+      const boxCount = parseInt(value) || 0;
+
+      if (users.length > boxCount) {
+        const truncatedUsers = users.slice(0, boxCount);
+        setUsers(truncatedUsers);
+        setCount(truncatedUsers.length);
+      }
+    }
   };
 
   const onChange = (e, index) => {
     const newUsers = [...users];
-    newUsers[index].work_order_sa_sub_barcode = e.target.value;
+    newUsers[index].work_order_sa_sub_barcode = e.target.value.toUpperCase();;
     setUsers(newUsers);
   };
 
@@ -77,8 +87,19 @@ const AddWorkOrderSales = () => {
 
   const addItem = (e) => {
     e.preventDefault();
-    setUsers([...users, { work_order_sa_sub_barcode: "" }]);
-    setCount(work_order_count + 1);
+  
+    const boxCount = parseInt(workorder.work_order_sa_pcs) || 0;
+    if (users.length < boxCount) {
+      const newUsers = [...users, { work_order_sa_sub_barcode: "" }];
+      setUsers(newUsers);
+      setCount(work_order_count + 1);
+      
+      // Focus on the newly added input
+      const newIndex = newUsers.length - 1;
+      if (inputRefs.current[newIndex]) {
+        inputRefs.current[newIndex].focus();
+      }
+    }
   };
 
   const removeUser = (index) => {
@@ -115,14 +136,14 @@ const AddWorkOrderSales = () => {
         }
       );
       if (response?.data?.code == "200") {
-        alert("success");
+        toast.success("Created Sales order Successfully");
         navigate("/work-order-sales");
       } else {
-        alert("error while sumbit");
+        toast.error("error while Creating Sales order");
       }
     } catch (error) {
-      console.error("error getting onsumbit add order received".error);
-      alert("error");
+      console.error("error getting onsumbit add order received",error);
+      toast.error("Api Error");
     } finally {
       setLoading(false);
     }
@@ -143,15 +164,17 @@ const AddWorkOrderSales = () => {
         }
       );
       if (response?.data?.code == "200") {
-        if (workorder.work_order_sa_pcs <= work_order_count) {
-        } else {
-          setUsers([...users, { work_order_sa_sub_barcode: "" }]);
+        if (work_order_count < parseInt(workorder.work_order_sa_pcs)) {
+          const newUsers = [...users, { work_order_sa_sub_barcode: "" }];
+          setUsers(newUsers);
           setCount(work_order_count + 1);
           toast.success("Barcode Found");
-          const nextIndex = index + 1;
-          if (inputRefs.current[nextIndex]) {
-            inputRefs.current[nextIndex].focus();
-          }
+          setTimeout(() => {
+            const nextIndex = index + 1;
+            if (inputRefs.current[nextIndex]) {
+              inputRefs.current[nextIndex].focus();
+            }
+          }, 0);
         }
       } else {
         toast.error("Barcode Not Found");
@@ -172,8 +195,9 @@ const AddWorkOrderSales = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-6">
           <form id="addIndiv" autoComplete="off" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <FormControl fullWidth>
+            <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6">
+             <div>
+             <FormControl fullWidth >
                 <InputLabel id="service-select-label">
                   <span className="text-sm relative bottom-[6px]">
                     Retailers <span className="text-red-700">*</span>
@@ -196,6 +220,7 @@ const AddWorkOrderSales = () => {
                   ))}
                 </Select>
               </FormControl>
+             </div>
 
               <div className="w-full">
                 <Input
@@ -240,9 +265,9 @@ const AddWorkOrderSales = () => {
                 />
               </div>
 
-              <div className="w-full">
+              <div className="w-full hidden">
                 <Input
-                  required
+                
                   label="No of Box"
                   name="work_order_sa_box"
                   value={workorder.work_order_sa_box}
@@ -264,7 +289,7 @@ const AddWorkOrderSales = () => {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className=" lg:col-span-3">
                 <Input
                   label="Remarks"
                   name="work_order_sa_remarks"
@@ -276,9 +301,9 @@ const AddWorkOrderSales = () => {
             </div>
 
             <hr className="my-6" />
-
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
             {users.map((user, index) => (
-              <div key={index} className="flex gap-4 items-center">
+              <div key={index} className="flex flex-row justify-start w-48 gap-4 items-center">
                 <div className="flex-1">
                   <Input
                     required
@@ -301,15 +326,19 @@ const AddWorkOrderSales = () => {
                 </IconButton>
               </div>
             ))}
-
+</div>
             <div className="mt-6">
               <Button
                 variant="contained"
                 color="primary"
                 className="w-36"
                 onClick={addItem}
+                disabled={
+                  !workorder.work_order_sa_pcs ||
+                  users.length >= (parseInt(workorder.work_order_sa_pcs) || 0)
+                }
               >
-                +New Box
+                +T Code
               </Button>
             </div>
           </form>

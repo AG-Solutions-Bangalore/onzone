@@ -144,12 +144,11 @@ const ViewOrderSales = () => {
                 <td className="p-1 w-[8rem]">: {workOrder.work_order_sa_dc_no}</td>
               </tr>
               <tr className="border-b">
-                <td className="font-semibold p-1 w-[8rem]">No of Box</td>
-                <td className="p-1 w-[16rem]">: {workOrder.work_order_sa_box}</td>
-                <td className="font-semibold p-1 w-[6rem] text-right">Total Pcs</td>
-                <td className="p-1 w-[8rem]">: {workOrder.work_order_sa_pcs}</td>
-                <td className="font-semibold p-1 w-[6rem] text-right">Sales By</td>
-                <td className="p-1 w-[8rem]">: {workOrder.work_order_sa_fabric_sale}</td>
+                <td className="font-semibold p-1 w-[8rem]">Total Pcs</td>
+                <td className="p-1 w-[16rem]">: {workOrder.work_order_sa_pcs}</td>
+             
+                <td className="font-semibold p-1 w-[8rem] text-right">Sales By</td>
+                <td className="p-1 w-[16rem]">: {workOrder.work_order_sa_fabric_sale}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold p-1 w-[8rem]">Address</td>

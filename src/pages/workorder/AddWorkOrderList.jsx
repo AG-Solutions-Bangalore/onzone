@@ -1024,7 +1024,7 @@ const AddWorkOrderList = () => {
 
             <Button
               type="submit"
-              className="mr-2 mb-2"
+              className="mr-2 bg-blue-500 hover:bg-green-500 mb-2"
               disabled={isButtonDisabled}
               // disabled
             >
@@ -1037,7 +1037,7 @@ const AddWorkOrderList = () => {
             {/* Back Button */}
 
             <Link to="/work-order">
-              <Button className="mr-2 mb-2">
+              <Button className="mr-2 bg-red-500 hover:bg-red-700 mb-2">
                 <div className="flex gap-1">
                   <MdArrowBack className="w-5 h-5" />
                   <span>Back</span>

@@ -106,22 +106,28 @@ const WorkOrderReceive = () => {
         options: {
           filter: false,
           sort: false,
-          customBodyRender: (id) => {
+          customBodyRender: (id,tableMeta) => {
+            const rowData = orderReceivedData[tableMeta.rowIndex];
             return (
               <div className="flex gap-2">
+                {rowData.work_order_rc_status.toLowerCase() !== 'received' && (
               <div 
               onClick={()=>navigate(`/edit-order-received/${id}`)}
               className="flex items-center space-x-2">
                 <CiEdit title="Edit" className="h-5 w-5 cursor-pointer" />
               </div>
-            
+                 )}
               <div 
               onClick={()=>navigate(`/view-order-received/${id}`)}
               className="flex items-center space-x-2">
                 <PiPackage  title="Packing List" className="h-5 w-5 cursor-pointer hover:text-red-500" />
               </div>
               <div 
-              onClick={()=>navigate(`/dc-receipt/${id}`)}
+              // onClick={()=>navigate(`/dc-receipt/${id}`)}
+              onClick={() => {
+                localStorage.setItem('work_order_rc_status', rowData.work_order_rc_status);
+                navigate(`/dc-receipt/${id}`);
+              }}
               className="flex items-center space-x-2">
                 <CiReceipt  title="DC Receipt" className="h-5 w-5 cursor-pointer hover:text-red-500" />
               </div>

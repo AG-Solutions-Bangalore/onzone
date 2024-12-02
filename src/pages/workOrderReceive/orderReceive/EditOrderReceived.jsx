@@ -12,6 +12,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Layout from "../../../layout/Layout";
 import BASE_URL from "../../../base/BaseUrl";
+import { toast } from "react-toastify";
 
 const work_receive = [
   {
@@ -133,14 +134,14 @@ const EditOrderReceived = () => {
         }
       );
       if (response?.data?.code == "200") {
-        alert("Work Order Receive Updated Successfully");
+        toast.success("Work Order Receive Updated Successfully");
         navigate("/work-order-receive");
       } else {
-        alert("error while sumbit edit");
+        toast.error("error while  edit the order received");
       }
     } catch (error) {
       console.error("error getting onsumbit add order received".error);
-      alert("error");
+      toast.error("APi Error");
     } finally {
       setLoading(false);
     }
@@ -263,14 +264,14 @@ const EditOrderReceived = () => {
               <div
                 className={`w-full  ${
                   workorder.work_order_rc_fabric_received === "Yes"
-                    ? "col-span-2"
-                    : "col-span-1"
+                    ? "lg:col-span-2"
+                    : "lg:col-span-1"
                 } `}
               >
                 <Input
                   label="Fabric Left Over"
                   name="work_order_rc_fabric_count"
-                  required
+             
                   value={workorder.work_order_rc_fabric_count}
                   onChange={onInputChange}
                 />
@@ -279,8 +280,8 @@ const EditOrderReceived = () => {
               <div
                 className={`w-full  ${
                   workorder.work_order_rc_fabric_received === "Yes"
-                    ? "col-span-4"
-                    : "col-span-2 "
+                    ? "lg:col-span-4"
+                    : "lg:col-span-2 "
                 } `}
               >
                 <Input

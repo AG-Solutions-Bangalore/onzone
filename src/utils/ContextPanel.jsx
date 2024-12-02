@@ -77,7 +77,13 @@ const AppProvider = ({ children }) => {
         "/view-order-sales",
         "/work-order-final-stock",
         "/retailer-report",
-        "/dc-receipt"
+        "/dc-receipt",
+        "/work-order-report",
+        "/view-work-order-report",
+        "/received-report",
+        "/sales-report",
+        "/view-received-report",
+        "/view-sales-report",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)

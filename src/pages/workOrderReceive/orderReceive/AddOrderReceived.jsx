@@ -16,11 +16,9 @@ import BASE_URL from "../../../base/BaseUrl";
 import dateyear from "../../../utils/DateYear";
 import todayBack from "../../../utils/TodayBack";
 import { toast } from "react-toastify";
-import useBarcodeScanner from "../../../hooks/useBarcodeScanner";
 
 const AddOrderReceived = () => {
   const navigate = useNavigate();
-  const barcodeRefs = useRef([]);
   const inputRefs = useRef([]);
   const work_receive = [
     {
@@ -135,16 +133,7 @@ const AddOrderReceived = () => {
     fetchBrand();
   }, [workorder.work_order_rc_id, fetchBrand]);
 
-  // Barcode Scanning Setup with the custom hook
-  const handleBarcodeScanned = (symbol, index) => {
-    const newUsers = [...users];
-    newUsers[index].work_order_rc_sub_barcode = symbol;
-    setUsers(newUsers);
-    console.log("commaseprated", newUsers);
-    CheckBarcode({ target: { value: symbol } }, index);
-  };
 
-  useBarcodeScanner(barcodeRefs, handleBarcodeScanned);
 
   const onInputChange = (e) => {
     setWorkorder({
@@ -219,14 +208,14 @@ const AddOrderReceived = () => {
         }
       );
       if (response?.data?.code == "200") {
-        alert("success");
+        toast.success("Add Order Received Successfully");
         navigate("/work-order-receive");
       } else {
-        alert("error while sumbit");
+        toast.err("error while Creating Order Received")
       }
     } catch (error) {
       console.error("error getting onsumbit add order received".error);
-      alert("error");
+      toast.error("Api Error");
     } finally {
       setLoading(false);
     }
@@ -430,8 +419,8 @@ const AddOrderReceived = () => {
               <div
                 className={`w-full  ${
                   workorder.work_order_rc_fabric_received === "Yes"
-                    ? "col-span-2"
-                    : "col-span-1"
+                    ? "lg:col-span-2"
+                    : "lg:col-span-1"
                 } `}
               >
                 <Input
@@ -445,10 +434,10 @@ const AddOrderReceived = () => {
               </div>
 
               <div
-                className={`col-span-2 ${
+                className={`lg:col-span-2 ${
                   workorder.work_order_rc_fabric_received === "Yes"
-                    ? "col-span-4"
-                    : "col-span-2"
+                    ? "lg:col-span-4"
+                    : "lg:col-span-2"
                 }`}
               >
                 <Input
@@ -474,8 +463,8 @@ const AddOrderReceived = () => {
                       value={user.work_order_rc_sub_box}
                       onChange={(e) => {
                         const newUsers = [...users];
-                        newUsers[index].work_order_rc_sub_box = e.target.value; // Update the state correctly
-                        setUsers(newUsers); // Update the users state
+                        newUsers[index].work_order_rc_sub_box = e.target.value; 
+                        setUsers(newUsers)
                       }}
                     />
                   </div>

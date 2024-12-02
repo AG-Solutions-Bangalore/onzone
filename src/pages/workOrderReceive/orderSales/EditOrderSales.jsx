@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom'
 import WorkOrderRecieveFilter from '../../../components/WorkOrderRecieveFilter'
 import Layout from '../../../layout/Layout'
 import BASE_URL from '../../../base/BaseUrl';
+import { toast } from 'react-toastify';
 
 const EditOrderSales = () => {
     const {id} = useParams()
@@ -122,14 +123,14 @@ const onSubmit = async (e) => {
         }
       );
       if (response?.data?.code == "200") {
-        alert("Work Order Sales Updated Sucessfully");
+        toast.success("Work Order Sales Updated Sucessfully");
         navigate("/work-order-sales");
       } else {
-        alert("error while sumbit edit");
+        toast.error("error while edit Sales order");
       }
     } catch (error) {
-      console.error("error getting onsumbit add order received".error);
-      alert("error");
+      console.error("error getting onsumbit add order received",error);
+      toast.error("Api Error");
     } finally {
       setLoading(false);
     }
@@ -185,12 +186,14 @@ const onSubmit = async (e) => {
             onChange={onInputChange}
           />
           
-          <Input
+         <div className='hidden'>
+         <Input
             label="No of Box"
             name="work_order_sa_box"
             value={workorder.work_order_sa_box}
             onChange={onInputChange}
           />
+         </div>
           
           <Input
             label="Total No of Pcs"
@@ -206,7 +209,7 @@ const onSubmit = async (e) => {
           />
           
          
-         <div className=' col-span-2'>
+         <div className=' lg:col-span-3'>
              
           <Input
             label="Remarks"

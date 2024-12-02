@@ -5,9 +5,9 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
-import { LuUsers } from "react-icons/lu";
+import { Collapse } from "@material-tailwind/react";
 import { TbReport, TbReportAnalytics } from "react-icons/tb";
 import { BsShopWindow } from "react-icons/bs";
 import { ContextPanel } from "../utils/ContextPanel";
@@ -16,7 +16,7 @@ import { RiFolderReceivedLine } from "react-icons/ri";
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
   const { pathname } = useLocation();
-  
+  const [openReports, setOpenReports] = useState(false);
   const { userType } = useContext(ContextPanel);
 
   // Hardcoded sidenavType to "dark"
@@ -120,7 +120,9 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
 
 
           <li>
-            <NavLink to="/work-order">
+            <NavLink to="/work-order"
+            
+            >
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
@@ -144,10 +146,23 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
 
 
           <li>
-            <NavLink to="/work-order-receive">
+            <NavLink to="/work-order-receive"
+            className={({ isActive }) => 
+              isActive || 
+              ['/work-order-receive', '/add-order-received', '/edit-order-received','/dc-receipt','/view-order-received']
+                .some(route => location.pathname.startsWith(route)) 
+                ? "active" : ""
+            }
+            >
               {({ isActive }) => (
                 <Button
-                  variant={isActive ? "gradient" : "text"}
+                variant={
+                  isActive || 
+                  ['/work-order-receive', '/add-order-received', '/edit-order-received','/dc-receipt','/view-order-received']
+                    .some(route => location.pathname.startsWith(route)) 
+                    ? "gradient" 
+                    : "text"
+                }
                   color="green"
                   className="flex items-center gap-4 px-4 p-2 capitalize"
                   fullWidth
@@ -167,10 +182,23 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
           {userType == 1 || userType == 2 ? (
             <>
           <li>
-            <NavLink to="/work-order-sales">
+            <NavLink to="/work-order-sales"
+             className={({ isActive }) => 
+              isActive || 
+              ['/work-order-sales', '/add-order-sales', '/edit-order-sales','/view-order-sales']
+                .some(route => location.pathname.startsWith(route)) 
+                ? "active" : ""
+            }
+            >
               {({ isActive }) => (
                 <Button
-                  variant={isActive ? "gradient" : "text"}
+                variant={
+                  isActive || 
+                  ['/work-order-sales', '/add-order-sales', '/edit-order-sales','/view-order-sales']
+                    .some(route => location.pathname.startsWith(route)) 
+                    ? "gradient" 
+                    : "text"
+                }
                   color="green"
                   className="flex items-center gap-4 px-4 p-2 capitalize"
                   fullWidth
@@ -211,8 +239,8 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
 
               {/* report start  */}
 
-              <hr className="border-b border-dashed mb-1" />
-          <li>
+              <hr className="border-b border-dashed border-green-500 mb-1" />
+          {/* <li>
             <NavLink to="/retailer-report">
               {({ isActive }) => (
                 <Button
@@ -233,11 +261,220 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
         
+          <li>
+            <NavLink to="/work-order-report">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <TbReport  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                   Work Order Report
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+        
+          <li>
+            <NavLink to="/received-report">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <TbReport  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Received Report
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+        
+          <li>
+            <NavLink to="/sales-report">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="green"
+                  className="flex items-center gap-4 px-4 p-2 capitalize"
+                  fullWidth
+                >
+                  <TbReport  className="w-5 h-5 text-black" />
+                  <Typography
+                    color="black"
+                    className="font-medium capitalize"
+                  >
+                    Sales Report
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li> */}
+
+<li>
+  <Button
+    variant={
+      [
+        '/retailer-report', 
+        '/work-order-report', 
+        '/received-report', 
+        '/sales-report'
+      ].some(route => pathname.startsWith(route)) 
+        ? "gradient" 
+        : "text"
+    }
+    color="green"
+    className="flex items-center gap-4 px-4 p-2 capitalize"
+    fullWidth
+    onClick={() => setOpenReports(!openReports)}
+  >
+    <TbReport className="w-5 h-5 text-black" />
+    <Typography
+      color="black"
+      className="font-medium capitalize"
+    >
+      Reports
+    </Typography>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2.5}
+      stroke="currentColor"
+      className={`h-4 w-4 transition-transform ml-auto ${openReports ? 'rotate-180' : ''}`}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
+  </Button>
+
+  <Collapse open={openReports}>
+    <ul className="pl-4">
+      <li>
+        <NavLink 
+          to="/retailer-report"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            setOpenReports(true); // Force dropdown to stay open
+          }}
+          
+        >
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "gradient" : "text"}
+              color="green"
+              className="flex items-center gap-4 px-4 p-2 capitalize"
+              fullWidth
+            >
+              <Typography
+                color="black"
+                className="font-medium capitalize"
+              >
+                Retailer Report
+              </Typography>
+            </Button>
+          )}
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink 
+          to="/work-order-report"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            setOpenReports(true); // Force dropdown to stay open
+          }}
+        >
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "gradient" : "text"}
+              color="green"
+              className="flex items-center gap-4 px-4 p-2 capitalize"
+              fullWidth
+            >
+              <Typography
+                color="black"
+                className="font-medium capitalize"
+              >
+                Work Order Report
+              </Typography>
+            </Button>
+          )}
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink 
+          to="/received-report"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            setOpenReports(true); // Force dropdown to stay open
+          }}
+        >
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "gradient" : "text"}
+              color="green"
+              className="flex items-center gap-4 px-4 p-2 capitalize"
+              fullWidth
+            >
+              <Typography
+                color="black"
+                className="font-medium capitalize"
+              >
+                Received Report
+              </Typography>
+            </Button>
+          )}
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink 
+          to="/sales-report"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            setOpenReports(true); // Force dropdown to stay open
+          }}
+        >
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "gradient" : "text"}
+              color="green"
+              className="flex items-center gap-4 px-4 p-2 capitalize"
+              fullWidth
+            >
+              <Typography
+                color="black"
+                className="font-medium capitalize"
+              >
+                Sales Report
+              </Typography>
+            </Button>
+          )}
+        </NavLink>
+      </li>
+    </ul>
+  </Collapse>
+</li>
+        
        
           
         </ul>
       </div>
-      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.2.7</div>
+      <div className=" fixed bottom-5 left-1/4 font-bold text-blue-gray-700 border-b border-dashed border-black   flex items-center ">Version: 1.2.9</div>
     </aside>
    
   );

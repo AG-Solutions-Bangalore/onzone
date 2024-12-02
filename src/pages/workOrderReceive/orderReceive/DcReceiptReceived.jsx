@@ -1,15 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../../layout/Layout";
 import ReactToPrint from "react-to-print";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import Loader from "../../../components/Loader";
 import moment from "moment";
+import {
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Button,
+} from "@material-tailwind/react";
+import { toast } from "react-toastify";
 
 const DcReceiptReceived = () => {
   const { id } = useParams();
+  const statusDc = localStorage.getItem("work_order_rc_status")
   const [workOrder, setWorkOrder] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [workOrderSub, setWorkOrderSub] = useState([]);
   const [workOrderFooter, setWorkOrderFooter] = useState({});
   const [loading, setLoading] = useState(true);
@@ -44,6 +55,34 @@ const DcReceiptReceived = () => {
     fetchViewReceived();
   }, [id]);
 
+  const openModal = (value) => {
+    setSelectedUser(value);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const updateDcReceipt = async (e) => {
+    e.preventDefault();
+    closeModal();
+    try {
+      await axios.put(
+        `${BASE_URL}/api/update-work-order-received-finish-by-id/${selectedUser}`,
+        null,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      toast.success("Dc Receipt Status Update Successfully");
+      navigate("/work-order-receive");
+      
+    } catch (error) {
+      toast.error("Error updating work order");
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -71,7 +110,7 @@ const DcReceiptReceived = () => {
      
       {/* Barcode Section */}
       <div className="border border-black p-1  ">
-      <div className="flex flex-row items-center justify-between border rounded-lg border-black p-2 mb-2">
+      <div className="flex flex-row items-center justify-between border  border-black p-2 mb-2">
         <span>Box: {boxNumber}</span>
         <span>Total No of Pcs: {totalPcs}</span>
       </div>
@@ -82,6 +121,30 @@ const DcReceiptReceived = () => {
     </div>
   );
 
+  const groupedBoxes = workOrderSub.reduce((acc, item) => {
+    const boxNumber = item.work_order_rc_sub_box;
+    if (!acc[boxNumber]) {
+      acc[boxNumber] = {
+        barcodes: [],
+        totalPcs: 0
+      };
+    }
+    acc[boxNumber].barcodes.push(item.work_order_rc_sub_barcode);
+    acc[boxNumber].totalPcs++;
+    return acc;
+  }, {});
+
+  // Render box content dynamically
+  const renderDynamicBoxContent = () => {
+    return Object.entries(groupedBoxes).map(([boxNumber, boxData]) => (
+      renderBoxContent(
+        boxNumber, 
+        boxData.totalPcs, 
+        boxData.barcodes.join(',')
+      )
+    ));
+  };
+
   return (
     <Layout>
       <div>
@@ -90,9 +153,18 @@ const DcReceiptReceived = () => {
             Dc Receipt
           </h3>
           <div className="flex gap-1">
+            {statusDc.toLowerCase() !== 'received' &&(
+ <Button 
+ onClick={() => openModal(id)}
+    className="flex bg-blue-500 hover:bg-green-400 p-2 items-center space-x-2"
+  >
+    <span>All Received </span>
+  </Button>
+            )}
+         
             <ReactToPrint
               trigger={() => (
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button className="bg-blue-500 hover:bg-green-500 rounded-lg text-white px-4 py-2  ">
                   Print
                 </button>
               )}
@@ -163,15 +235,33 @@ const DcReceiptReceived = () => {
               </tr>
             </tbody>
           </table>
-
           {/* Render 3 boxes */}
           <div className="mt-4 space-y-4 ">
-            {renderBoxContent(1, 12, "MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12")}
-            {renderBoxContent(2, 18, "MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6")}
-            {renderBoxContent(3, 24, "MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12,MF12I5,MF12I6,TF12I5,JHMF12")}
+          {renderDynamicBoxContent()}
           </div>
         </div>
       </div>
+
+
+      <Dialog open={showModal} handler={closeModal}>
+        <DialogHeader>Receive all Material From the Factory?</DialogHeader>
+        <DialogBody divider>
+          Are you sure you want to close this  <span className="text-red-500">DC Receipt</span> and mark all materials
+          as received?
+        </DialogBody>
+        <DialogFooter>
+          <Button variant="text" color="red" onClick={closeModal}>
+            No
+          </Button>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={updateDcReceipt}
+          >
+            Yes
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </Layout>
   );
 };
